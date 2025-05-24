@@ -12,3 +12,11 @@ const nextConfig = {
 }
 
 export default nextConfig
+
+// next.config.js
+const isProd = process.env.NODE_ENV === 'production';
+
+module.exports = {
+  output: 'export', // Static export gerekiyor
+  trailingSlash: true,
+};
