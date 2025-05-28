@@ -25,11 +25,13 @@ export function Sidebar() {
 
   useEffect(() => {
     setMounted(true)
+    setIsOpen(false)
   }, [])
 
   if (!mounted) {
     return null
   }
+
 
   return (
     <>
@@ -55,13 +57,13 @@ export function Sidebar() {
                 damping: 30,
                 opacity: { duration: 0.2 }
               }}
-              className="fixed left-0 top-0 z-50 h-full w-64 bg-card/80 backdrop-blur-sm border-r border-border shadow-lg md:bg-card"
+              className="fixed left-0 top-0 z-50 h-full w-72 bg-card/80 backdrop-blur-sm border-r border-border shadow-lg md:bg-card"
             >
               <div className="flex h-full flex-col">
                 {/* Header */}
                 <div className="p-6 border-b border-border">
-                  <div className="flex items-center justify-between">
-                    <div>
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="min-w-0">
                       <motion.h1
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -84,6 +86,7 @@ export function Sidebar() {
                       size="icon"
                       onClick={() => setIsOpen(!isOpen)}
                       aria-label="Toggle sidebar"
+                      className="shrink-0"
                     >
                       <ChevronLeft className="h-4 w-4" />
                     </Button>

@@ -15,11 +15,10 @@ export function MainLayout({ children }: MainLayoutProps) {
     <motion.main
       initial={false}
       animate={{
-        marginLeft: isOpen ? "0" : "0",
-        paddingLeft: isOpen ? "1rem" : "4rem",
+        marginLeft: isOpen ? "18rem" : "4rem",
       }}
       transition={{ duration: 0.3 }}
-      className="min-h-screen pt-16 md:pt-16 relative z-30 md:ml-64"
+      className="min-h-screen pt-16 md:pt-16 relative z-30"
     >
       {children}
     </motion.main>

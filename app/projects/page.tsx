@@ -202,7 +202,7 @@ export default function ProjectsPage() {
 
           <div className="mb-8 space-y-4">
             <p className="text-lg text-muted-foreground">
-              Here are some of my recent projects from my GitHub profile.
+              Here are some of my recent projects.
             </p>
 
             {/* Filters and Search */}
@@ -280,9 +280,9 @@ export default function ProjectsPage() {
                     <Card className="h-full hover:shadow-lg transition-shadow duration-300">
                       <CardHeader>
                         <CardTitle className="flex items-center justify-between">
-                          <span className="truncate">{project.name}</span>
+                          <span className="break-words">{project.name}</span>
                         </CardTitle>
-                        <p className="text-sm text-muted-foreground line-clamp-3">
+                        <p className="text-sm text-muted-foreground break-words">
                           {project.description || "No description available"}
                         </p>
                       </CardHeader>

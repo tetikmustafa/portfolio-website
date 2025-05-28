@@ -49,7 +49,7 @@ export default function AboutPage() {
   const [cvDialogOpen, setCvDialogOpen] = useState(false)
 
   return (
-    <div className="min-h-screen p-8">
+    <div className="min-h-screen">
       <div className="max-w-4xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-8">About Me</h1>

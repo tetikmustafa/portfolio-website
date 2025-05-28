@@ -43,7 +43,7 @@ export default function HomePage() {
             </Button>
 
             <Button variant="outline" size="lg" className="group">
-              <a href="/cv.pdf" download="CV.pdf">
+              <a href="/cv.pdf" download="CV.pdf" className="flex flex-row">
                 <Download className="mr-2 h-4 w-4 transition-transform group-hover:scale-110" />
                 Download CV
               </a>
