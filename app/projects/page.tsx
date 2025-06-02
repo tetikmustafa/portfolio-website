@@ -19,8 +19,6 @@ interface Project {
   homepage: string | null
   topics: string[]
   language: string | null
-  created_at: string
-  updated_at: string
   additionalDescriptions?: string[]
 }
 
@@ -46,9 +44,7 @@ export default function ProjectsPage() {
         "Authored a research paper on detecting suicidal intent in social media posts using deep learning models.",
         "Implemented and compared two unused models in literature, achieving 97% accuracy in both models.",
         "Conducted data preprocessing, feature extraction, and model evaluation to improve classification performance."
-      ],
-      created_at: "2023-01-15T10:00:00Z",
-      updated_at: "2024-01-15T10:00:00Z",
+      ],  
     },
     {
       id: 2,
@@ -66,8 +62,6 @@ export default function ProjectsPage() {
         "Integrated MySQL as the relational database for data storage and management.",
         "Used Docker and Docker Compose for containerization and deployment."
       ],
-      created_at: "2023-03-20T10:00:00Z",
-      updated_at: "2023-12-10T10:00:00Z",
     },
     {
       id: 3,
@@ -83,8 +77,6 @@ export default function ProjectsPage() {
         "Designed game mechanics to maintain the original Pac-Man experience while enhancing interactivity.",
         "Focused on smooth network communication, responsive controls, and an engaging multiplayer experience."
       ],
-      created_at: "2023-06-10T10:00:00Z",
-      updated_at: "2023-11-20T10:00:00Z",
     },
     {
       id: 4,
@@ -97,8 +89,6 @@ export default function ProjectsPage() {
       additionalDescriptions: [
         "A simple car game made with assembly codes. Used emu8086 version 4.05. 8086 microprocessor emulator."
       ],
-      created_at: "2023-08-05T10:00:00Z",
-      updated_at: "2024-01-05T10:00:00Z",
     },
     {
       id: 5,
@@ -114,8 +104,6 @@ export default function ProjectsPage() {
         "Choose your course type.",
         "Different Syllabus' for different accounts."
       ],
-      created_at: "2023-08-05T10:00:00Z",
-      updated_at: "2024-01-05T10:00:00Z",
     },
     {
       id: 6,
@@ -130,8 +118,6 @@ export default function ProjectsPage() {
         "Interactive camera controls for exploring the solar system.",
         "Planet trails showing orbital paths.",
       ],
-      created_at: "2023-08-05T10:00:00Z",
-      updated_at: "2024-01-05T10:00:00Z",
     },
   ]
 
