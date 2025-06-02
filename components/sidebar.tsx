@@ -26,6 +26,7 @@ export function Sidebar() {
   useEffect(() => {
     setMounted(true)
     setIsOpen(false)
+    setTheme("dark")
   }, [])
 
   if (!mounted) {
