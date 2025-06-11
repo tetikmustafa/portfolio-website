@@ -48,6 +48,23 @@ export default function ProjectsPage() {
     },
     {
       id: 2,
+      name: "Ransomware Simulation & Analysis",
+      description: "Simulated a controlled WannaCry ransomware attack in an isolated virtual lab to analyze behavior and test defense mechanisms.",
+      html_url: "", // GitHub veya proje bağlantısı varsa buraya eklenebilir.
+      homepage: "", // Eğer varsa, proje hakkında daha fazla bilgi sağlayan web sitesi veya dokümantasyon linki.
+      topics: ["WannaCry", "Malware Analysis", "REMnux", "INetSim", "Wireshark", "Static Analysis", "Dynamic Analysis", "Virtualization"],
+      language: "CyberSecurity", // Bu proje çok kod içermiyor ama kullanılan araçlar için script dilleri tahmini ekledim.
+      additionalDescriptions: [
+        "Simulated a WannaCry ransomware attack in a fully isolated virtual environment to study infection patterns and defense strategies.",
+        "Configured Windows 10 and REMnux virtual machines on a host-only network to ensure total isolation from production systems.",
+        "Deployed INetSim to safely emulate internet services, enabling observation of malware's outbound communication attempts.",
+        "Monitored system and network activity using Wireshark, tcpdump, Procmon, Process Explorer, and Regshot to capture behavioral indicators.",
+        "Performed static analysis with PeStudio to examine malware binaries, structure, and imported libraries.",
+        "Analyzed file encryption processes, registry modifications, and lateral movement techniques commonly used by WannaCry.",
+      ]
+    },
+    {
+      id: 3,
       name: "Order Managing App",
       description: "Backend project for order management application",
       html_url: "https://github.com/tetikmustafa/OrdersAppMicroservices",
@@ -64,7 +81,7 @@ export default function ProjectsPage() {
       ],
     },
     {
-      id: 3,
+      id: 4,
       name: "Multiplayer Pacman Game",
       description: "A Pacman themed multiplayer game made with unity.",
       html_url: "https://github.com/tetikmustafa/MultiplayerPacmanGame",
@@ -79,7 +96,7 @@ export default function ProjectsPage() {
       ],
     },
     {
-      id: 4,
+      id: 5,
       name: "Assembly Car Game",
       description: "Simple Car Game Coded With Assembly",
       html_url: "https://github.com/tetikmustafa/AssemblyCarGame",
@@ -91,7 +108,7 @@ export default function ProjectsPage() {
       ],
     },
     {
-      id: 5,
+      id: 6,  
       name: "Syllabus Creator App",
       description: "An application that helps you manage your weekly courses.",
       html_url: "https://github.com/tetikmustafa/Syllabus-Creator-App",
@@ -106,7 +123,7 @@ export default function ProjectsPage() {
       ],
     },
     {
-      id: 6,
+      id: 7,
       name: "Solar System Model",
       description: "A website for observing a scale model of the solar system ",
       html_url: "https://github.com/tetikmustafa/SolarSystemModel",
