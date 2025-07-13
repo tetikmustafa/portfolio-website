@@ -30,10 +30,10 @@ const skills = [
 
 const education = [
   {
-    degree: "Bachelor of Science in Computer Engineering - GPA: 3.12",
+    degree: "Bachelor of Science in Computer Engineering",
     school: "Marmara University",
     year: "2022-Present",
-    description: "",
+    description: "GPA: 3.12",
   },
 ]
 
