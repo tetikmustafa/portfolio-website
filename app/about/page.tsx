@@ -20,11 +20,17 @@ const skills = [
   "MySQL",
   "Docker",
   "Git",
+  "Python (Pandas, NumPy, TensorFlow)",
+  "model evaluation",
+  "data preprocessing",
+  "REMnux",
+  "Wireshark",
+  "tcpdump",
 ]
 
 const education = [
   {
-    degree: "Bachelor of Science in Computer Engineering",
+    degree: "Bachelor of Science in Computer Engineering - GPA: 3.12",
     school: "Marmara University",
     year: "2022-Present",
     description: "",
@@ -42,6 +48,17 @@ const experience = [
       "Applied Test-Driven Development (TDD) principles to write test-driven, maintainable, and reliable code.",
     description3:
       "Focused on building scalable and efficient backend services while following best practices in software development.",
+  },
+  {
+    title: "IT Intern",
+    company: "Brisa Bridgestone Sabancı",
+    period: "July 2025 – September 2025",
+    description:
+      "Gaining experience in software lifecycle within the IT department of a corporate environment.",
+    description2:
+      "Utilizing platforms like Jira and Bugzilla for issue tracking, project management, and task coordination.",
+    description3:
+      "Contributing to documentation and test activities related to service-based architectures.",
   },
 ]
 
