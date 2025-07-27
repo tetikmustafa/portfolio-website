@@ -37,7 +37,7 @@ export default function ProjectsPage() {
       name: "Deep Learning Models Research Paper",
       description: "Analysis of Suicide Content in Social Media Posts with Deep Learning Models and Comparison of Models",
       html_url: "",
-      homepage: "",
+      homepage: "/ysa.pdf",
       topics: ["Deep Learning", "NLP", "CNN"],
       language: "Python",
       additionalDescriptions: [
@@ -51,7 +51,7 @@ export default function ProjectsPage() {
       name: "Ransomware Simulation & Analysis",
       description: "Simulated a controlled WannaCry ransomware attack in an isolated virtual lab to analyze behavior and test defense mechanisms.",
       html_url: "", // GitHub veya proje bağlantısı varsa buraya eklenebilir.
-      homepage: "", // Eğer varsa, proje hakkında daha fazla bilgi sağlayan web sitesi veya dokümantasyon linki.
+      homepage: "/ransomware.pdf", // Eğer varsa, proje hakkında daha fazla bilgi sağlayan web sitesi veya dokümantasyon linki.
       topics: ["WannaCry", "Malware Analysis", "REMnux", "INetSim", "Wireshark", "Static Analysis", "Dynamic Analysis", "Virtualization"],
       language: "CyberSecurity", // Bu proje çok kod içermiyor ama kullanılan araçlar için script dilleri tahmini ekledim.
       additionalDescriptions: [
