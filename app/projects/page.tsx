@@ -37,7 +37,7 @@ export default function ProjectsPage() {
       name: "Deep Learning Models Research Paper",
       description: "Analysis of Suicide Content in Social Media Posts with Deep Learning Models and Comparison of Models",
       html_url: "",
-      homepage: "/ysa.pdf",
+      homepage: "",
       topics: ["Deep Learning", "NLP", "CNN"],
       language: "Python",
       additionalDescriptions: [
