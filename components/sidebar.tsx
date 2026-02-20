@@ -28,6 +28,16 @@ export function Sidebar() {
     }
   }, [])
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.setAttribute("data-sidebar", "open")
+    } else {
+      document.body.removeAttribute("data-sidebar")
+    }
+    
+    return () => document.body.removeAttribute("data-sidebar")
+  }, [isOpen])
+
   const toggleTheme = () => {
     const newDark = !isDark
     setIsDark(newDark)
@@ -45,7 +55,7 @@ export function Sidebar() {
       {/* Mobile hamburger button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed top-4 left-4 z-40 md:hidden p-2 rounded-lg bg-card border border-border shadow-sm"
+        className="fixed top-4 left-4 z-40 md:hidden p-2 rounded-lg bg-card border border-border"
         aria-label="Open menu"
       >
         <Menu className="h-5 w-5 text-foreground" />
@@ -61,7 +71,7 @@ export function Sidebar() {
 
       {/* Expanded sidebar (mobile: slides in, desktop: toggled) */}
       <aside
-        className={`fixed left-0 top-0 z-50 h-full w-72 bg-card border-r border-border shadow-lg flex flex-col transition-transform duration-300 ease-out ${
+        className={`fixed left-0 top-0 z-50 h-full w-64 bg-card border-r border-border flex flex-col transition-transform duration-300 ease-out ${
           isOpen ? "translate-x-0" : "-translate-x-full md:hidden"
         }`}
       >
@@ -89,8 +99,10 @@ export function Sidebar() {
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    onClick={() => setIsOpen(false)}
-                    className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    onClick={() => {
+                      if (window.innerWidth < 768) setIsOpen(false)
+                    }}
+                    className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:translate-x-1 ${
                       isActive
                         ? "bg-primary text-primary-foreground"
                         : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
@@ -108,14 +120,14 @@ export function Sidebar() {
         <div className="p-4 border-t border-border">
           <div className="flex items-center justify-between">
             <div className="flex gap-1">
-              <a href="https://github.com/tetikmustafa" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="p-2 rounded-lg hover:bg-accent text-muted-foreground">
+              <a href="https://github.com/tetikmustafa" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="p-2 rounded-lg hover:bg-accent text-muted-foreground hover:scale-110 transition-transform duration-200">
                 <Github className="h-4 w-4" />
               </a>
-              <a href="https://linkedin.com/in/mustafa-tetik" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="p-2 rounded-lg hover:bg-accent text-muted-foreground">
+              <a href="https://linkedin.com/in/mustafa-tetik" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="p-2 rounded-lg hover:bg-accent text-muted-foreground hover:scale-110 transition-transform duration-200">
                 <Linkedin className="h-4 w-4" />
               </a>
             </div>
-            <button onClick={toggleTheme} className="p-2 rounded-lg hover:bg-accent text-muted-foreground" aria-label="Toggle theme">
+            <button onClick={toggleTheme} className="p-2 rounded-lg hover:bg-accent text-muted-foreground hover:scale-110 transition-transform duration-200" aria-label="Toggle theme">
               {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </button>
           </div>
@@ -162,13 +174,13 @@ export function Sidebar() {
         </nav>
 
         <div className="p-2 border-t border-border flex flex-col items-center gap-1">
-          <a href="https://github.com/tetikmustafa" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="p-2 rounded-lg hover:bg-accent text-muted-foreground transition-colors">
+          <a href="https://github.com/tetikmustafa" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="p-2 rounded-lg hover:bg-accent text-muted-foreground transition-all duration-200 hover:scale-110">
             <Github className="h-5 w-5" />
           </a>
-          <a href="https://linkedin.com/in/mustafa-tetik" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="p-2 rounded-lg hover:bg-accent text-muted-foreground transition-colors">
+          <a href="https://linkedin.com/in/mustafa-tetik" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="p-2 rounded-lg hover:bg-accent text-muted-foreground transition-all duration-200 hover:scale-110">
             <Linkedin className="h-5 w-5" />
           </a>
-          <button onClick={toggleTheme} className="p-2 rounded-lg hover:bg-accent text-muted-foreground transition-colors" aria-label="Toggle theme">
+          <button onClick={toggleTheme} className="p-2 rounded-lg hover:bg-accent text-muted-foreground transition-all duration-200 hover:scale-110" aria-label="Toggle theme">
             {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
           </button>
         </div>

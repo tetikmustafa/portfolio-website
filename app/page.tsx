@@ -34,14 +34,11 @@ export default function HomePage() {
         </div>
 
         <div className="mt-16 fade-up-delay-3">
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full blur-3xl"></div>
-            <div className="relative bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-8 max-w-2xl mx-auto">
-              <p className="text-muted-foreground leading-relaxed">
-              I&apos;m currently looking for an internship where I can keep learning new things, grow my skills, 
-              and be part of a team where I can really get involved in real projects.
-              </p>
-            </div>
+          <div className="bg-card border border-border rounded-2xl p-8 max-w-2xl mx-auto hover:-translate-y-1 hover:border-primary/30 transition-all duration-300">
+            <p className="text-muted-foreground leading-relaxed transition-colors hover:text-foreground">
+            I&apos;m currently looking for an internship where I can keep learning new things, grow my skills, 
+            and be part of a team where I can really get involved in real projects.
+            </p>
           </div>
         </div>
       </div>

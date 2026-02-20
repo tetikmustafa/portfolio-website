@@ -105,13 +105,46 @@ html {
 /* ===== CSS-only page entrance animations ===== */
 /* Using "fade-up" prefix to avoid conflict with tailwindcss-animate's "animate-in" */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.fade-up        { animation: fadeUp 0.35s ease-out both; }
-.fade-up-delay-1 { animation: fadeUp 0.35s ease-out 0.06s both; }
-.fade-up-delay-2 { animation: fadeUp 0.35s ease-out 0.12s both; }
-.fade-up-delay-3 { animation: fadeUp 0.35s ease-out 0.18s both; }
-.fade-up-delay-4 { animation: fadeUp 0.35s ease-out 0.24s both; }
-.fade-up-delay-5 { animation: fadeUp 0.35s ease-out 0.30s both; }
+.fade-up {
+  animation: fadeUp 0.35s ease-out both;
+}
+.fade-up-delay-1 {
+  animation: fadeUp 0.35s ease-out 0.06s both;
+}
+.fade-up-delay-2 {
+  animation: fadeUp 0.35s ease-out 0.12s both;
+}
+.fade-up-delay-3 {
+  animation: fadeUp 0.35s ease-out 0.18s both;
+}
+.fade-up-delay-4 {
+  animation: fadeUp 0.35s ease-out 0.24s both;
+}
+.fade-up-delay-5 {
+  animation: fadeUp 0.35s ease-out 0.3s both;
+}
+
+/* Sidebar Layout Shift */
+.main-content {
+  @apply min-h-screen transition-[margin-left] duration-300 ease-out;
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  .main-content {
+    margin-left: 4rem; /* 16 tailwind units (w-16) */
+  }
+  body[data-sidebar="open"] .main-content {
+    margin-left: 16rem; /* 64 tailwind units (w-64) */
+  }
+}

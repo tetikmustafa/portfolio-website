@@ -66,7 +66,7 @@ export default function RootLayout({
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className={inter.className}>
         <Sidebar />
-        <main className="min-h-screen md:ml-16 transition-[margin-left] duration-300">
+        <main className="main-content">
           {children}
         </main>
       </body>

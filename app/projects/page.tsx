@@ -135,7 +135,7 @@ export default function ProjectsPage() {
         <div className="grid gap-6 grid-cols-1">
           {projects.map((project) => (
             <div key={project.id} className="fade-up-delay-2">
-              <Card className="h-full hover:shadow-lg transition-shadow duration-300">
+              <Card className="h-full transition-shadow duration-300">
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between">
                     <span className="break-words">{project.name}</span>
@@ -170,7 +170,7 @@ export default function ProjectsPage() {
                         href={project.html_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 h-9 px-3 rounded-md text-sm font-medium border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors"
+                        className="inline-flex items-center gap-1 h-9 px-3 rounded-md text-sm font-medium border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-all duration-200 hover:-translate-y-0.5"
                       >
                         <Github className="h-4 w-4" />
                         Code
@@ -182,7 +182,7 @@ export default function ProjectsPage() {
                         href={project.homepage}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 h-9 px-3 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                        className="inline-flex items-center gap-1 h-9 px-3 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 hover:-translate-y-0.5"
                       >
                         <ExternalLink className="h-4 w-4" />
                         Demo
