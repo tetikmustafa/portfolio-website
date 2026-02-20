@@ -1,15 +1,20 @@
 {
-  "name": "Portfolio Website",
+  "name": "Mustafa Tetik Portfolio",
   "short_name": "Portfolio",
+  "description": "Personal portfolio website of Mustafa Tetik",
   "icons": [
     {
       "src": "/logo.png",
       "sizes": "192x192",
       "type": "image/png"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "display": "standalone",
-  "start_url": "/"
-} 
+  "theme_color": "#0a0f1e",
+  "background_color": "#0a0f1e",
+  "display": "standalone"
+}

@@ -2,11 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
 import { Sidebar } from "@/components/sidebar"
-import { SidebarProvider } from "@/components/sidebar-context"
-import { MainLayout } from "@/components/main-layout"
-import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -15,7 +11,7 @@ export const metadata: Metadata = {
   title: "Mustafa Tetik - Computer Engineering Student",
   description:
     "Personal portfolio of Mustafa Tetik, a passionate computer engineering student who is eager to improve himself.",
-  keywords: ["developer", "portfolio", "react", "nextjs", "typescript", "backend","springboot"],
+  keywords: ["developer", "portfolio", "react", "nextjs", "typescript", "backend", "springboot"],
   authors: [{ name: "Mustafa Tetik" }],
   creator: "Mustafa Tetik",
   openGraph: {
@@ -28,9 +24,9 @@ export const metadata: Metadata = {
     siteName: "Mustafa Tetik Portfolio",
     images: [
       {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
+        url: "/logo.png",
+        width: 512,
+        height: 512,
         alt: "Mustafa Tetik Portfolio",
       },
     ],
@@ -40,7 +36,7 @@ export const metadata: Metadata = {
     title: "Mustafa Tetik - Computer Engineering Student",
     description:
       "Personal portfolio of Mustafa Tetik, a passionate computer engineering student who is eager to improve himself.",
-    images: ["/og-image.jpg"],
+    images: ["/logo.png"],
     creator: "@mustafatetik",
   },
   robots: {
@@ -54,11 +50,11 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  generator: 'v0.dev',
   icons: {
     icon: '/logo.png',
     apple: '/logo.png',
-  }
+  },
+  manifest: '/site.webmanifest',
 }
 
 export default function RootLayout({
@@ -67,21 +63,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <link rel="icon" href="/logo.png" />
-        <link rel="apple-touch-icon" href="/logo.png" />
-        <link rel="manifest" href="/site.webmanifest" />
-      </head>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <SidebarProvider>
-            <Sidebar />
-            <MainLayout>{children}</MainLayout>
-          </SidebarProvider>
-          <Toaster />
-        </ThemeProvider>
+        <Sidebar />
+        <main className="min-h-screen md:ml-16 transition-[margin-left] duration-300">
+          {children}
+        </main>
       </body>
     </html>
   )
