@@ -122,7 +122,7 @@ const projects: Project[] = [
 
 export default function ProjectsPage() {
   return (
-    <div className="min-h-screen p-6 md:p-10">
+    <div className="min-h-screen p-6 pt-20 md:p-10">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-8 fade-up">Projects</h1>
 
