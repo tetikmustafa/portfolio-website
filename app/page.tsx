@@ -113,7 +113,7 @@ export default function HomePage() {
                     <p className="text-xs text-muted-foreground mt-0.5">
                       {exp.company}
                     </p>
-                    <p className="text-xs text-primary/60 mt-1">{exp.period}</p>
+                    <p className="text-xs text-primary/90 mt-1">{exp.period}</p>
                   </div>
                 </Link>
               ))}

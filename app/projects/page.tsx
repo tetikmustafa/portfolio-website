@@ -195,7 +195,7 @@ export default function ProjectsPage() {
                 {/* Topic tags */}
                 <div className="flex flex-wrap gap-1.5 mt-auto pt-2">
                   {project.topics.map((topic) => (
-                    <span key={topic} className="project-tag">
+                    <span key={topic} className="project-tag whitespace-nowrap">
                       {topic}
                     </span>
                   ))}

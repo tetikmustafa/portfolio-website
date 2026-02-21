@@ -94,16 +94,18 @@ export default function AboutPage() {
               <p className="text-sm text-muted-foreground mb-4">
                 Download my complete CV or preview it right here.
               </p>
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <a
                   href="/cv.pdf"
                   download="CV.pdf"
-                  className="inline-flex items-center gap-2 h-10 px-5 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors group"
+                  className="inline-flex items-center justify-center gap-2 h-10 px-5 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors group w-full sm:w-auto whitespace-nowrap"
                 >
-                  <Download className="h-4 w-4 transition-transform group-hover:scale-110" />
-                  Download CV
+                  <Download className="h-4 w-4 transition-transform group-hover:scale-110 shrink-0" />
+                  <span>Download CV</span>
                 </a>
-                <CvPreviewButton />
+                <div className="w-full sm:w-auto">
+                  <CvPreviewButton />
+                </div>
               </div>
             </div>
           </div>
@@ -121,7 +123,7 @@ export default function AboutPage() {
                   <div className="about-timeline-dot" />
                   <div className="about-timeline-content">
                     <h3 className="font-semibold text-foreground text-sm">{exp.title}</h3>
-                    <p className="text-xs text-primary/70 font-medium mt-0.5">
+                    <p className="text-xs text-primary/90 font-medium mt-0.5">
                       {exp.company}
                     </p>
                     <p className="text-xs text-muted-foreground mt-0.5">{exp.period}</p>
@@ -149,7 +151,7 @@ export default function AboutPage() {
             {education.map((edu, index) => (
               <div key={index} className="about-section-card">
                 <h3 className="font-semibold text-foreground text-sm">{edu.degree}</h3>
-                <p className="text-xs text-primary/70 font-medium mt-0.5">{edu.school}</p>
+                <p className="text-xs text-primary/90 font-medium mt-0.5">{edu.school}</p>
                 <p className="text-xs text-muted-foreground mt-0.5">{edu.year}</p>
                 <p className="text-xs text-muted-foreground mt-2">{edu.description}</p>
               </div>

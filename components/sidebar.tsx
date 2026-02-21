@@ -80,7 +80,7 @@ export function Sidebar() {
           <div className="flex items-center justify-between gap-3">
             <div>
               <h1 className="text-lg font-bold text-foreground tracking-tight">Mustafa Tetik</h1>
-              <p className="text-xs text-primary/60 mt-0.5">Computer Engineering</p>
+              <p className="text-xs text-primary/90 mt-0.5">Computer Engineering</p>
             </div>
             <button
               onClick={() => setIsOpen(false)}
