@@ -1,4 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Mail, Github, Linkedin, MapPin } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -32,58 +31,53 @@ const contactInfo = [
 export default function ContactPage() {
   return (
     <div className="min-h-screen p-6 pt-20 md:p-10">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-8 fade-up">Get In Touch</h1>
+      <div className="max-w-3xl mx-auto">
 
-        <div className="fade-up-delay-1">
-          <Card>
-            <CardHeader>
-              <CardTitle>Contact Information</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-8">
-              <p className="text-muted-foreground text-lg">
-              I am always available for new opportunities and collaborations.  
-              </p>
+        {/* Header */}
+        <div className="mb-10 fade-up">
+          <h1 className="text-4xl md:text-5xl font-bold homepage-name mb-3">Get In Touch</h1>
+          <p className="text-lg text-muted-foreground">
+            I am always available for new opportunities and collaborations.
+          </p>
+        </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {contactInfo.map((item) => {
-                  const isLink = !!item.href
-                  const Wrapper = isLink ? "a" : "div"
-                  const wrapperProps = isLink 
-                    ? { 
-                        href: item.href, 
-                        target: item.href?.startsWith("http") ? "_blank" : undefined,
-                        rel: item.href?.startsWith("http") ? "noopener noreferrer" : undefined,
-                      } 
-                    : {}
+        {/* Contact Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {contactInfo.map((item, idx) => {
+            const isLink = !!item.href
+            const Wrapper = isLink ? "a" : "div"
+            const wrapperProps = isLink
+              ? {
+                  href: item.href,
+                  target: item.href?.startsWith("http") ? "_blank" : undefined,
+                  rel: item.href?.startsWith("http") ? "noopener noreferrer" : undefined,
+                }
+              : {}
 
-                  return (
-                    <Wrapper
-                      key={item.label}
-                      {...wrapperProps}
-                      className={cn(
-                        "flex items-center gap-4 p-4 bg-card rounded-lg border transition-all duration-300",
-                        isLink ? "hover:border-primary/50 hover:bg-accent/50 hover:-translate-y-1 cursor-pointer group" : ""
-                      )}
-                    >
-                      <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                        <item.icon className="h-6 w-6 text-primary" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-foreground">{item.label}</p>
-                        <p className={cn(
-                          "text-sm transition-colors",
-                          isLink ? "text-muted-foreground group-hover:text-primary" : "text-muted-foreground"
-                        )}>
-                          {item.value}
-                        </p>
-                      </div>
-                    </Wrapper>
-                  )
-                })}
-              </div>
-            </CardContent>
-          </Card>
+            return (
+              <Wrapper
+                key={item.label}
+                {...wrapperProps}
+                className={cn(
+                  `contact-card fade-up-delay-${Math.min(idx + 1, 5)}`,
+                  isLink ? "cursor-pointer group" : ""
+                )}
+              >
+                <div className="contact-icon-wrapper group-hover:border-primary/30 group-hover:shadow-[0_0_12px_hsl(var(--primary)/0.15)]">
+                  <item.icon className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-foreground">{item.label}</p>
+                  <p className={cn(
+                    "text-sm transition-colors",
+                    isLink ? "text-muted-foreground group-hover:text-primary" : "text-muted-foreground"
+                  )}>
+                    {item.value}
+                  </p>
+                </div>
+              </Wrapper>
+            )
+          })}
         </div>
       </div>
     </div>

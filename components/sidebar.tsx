@@ -55,7 +55,7 @@ export function Sidebar() {
       {/* Mobile hamburger button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed top-4 left-4 z-40 md:hidden p-2 rounded-lg bg-card border border-border"
+        className="fixed top-4 left-4 z-40 md:hidden p-2 rounded-lg sidebar-glass border border-border/50"
         aria-label="Open menu"
       >
         <Menu className="h-5 w-5 text-foreground" />
@@ -64,26 +64,27 @@ export function Sidebar() {
       {/* Mobile overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
           onClick={() => setIsOpen(false)}
         />
       )}
 
-      {/* Expanded sidebar (mobile: slides in, desktop: toggled) */}
+      {/* ── Expanded sidebar ── */}
       <aside
-        className={`fixed left-0 top-0 z-50 h-full w-64 bg-card border-r border-border flex flex-col transition-transform duration-300 ease-out ${
+        className={`fixed left-0 top-0 z-50 h-full w-64 sidebar-glass border-r border-border/50 flex flex-col transition-transform duration-300 ease-out overflow-y-auto ${
           isOpen ? "translate-x-0" : "-translate-x-full md:hidden"
         }`}
       >
-        <div className="p-6 border-b border-border">
-          <div className="flex items-center justify-between gap-4">
+        {/* Header */}
+        <div className="p-5 border-b border-border/50">
+          <div className="flex items-center justify-between gap-3">
             <div>
-              <h1 className="text-xl font-bold text-foreground">Mustafa Tetik</h1>
-              <p className="text-sm text-muted-foreground mt-1">Computer Engineering Student</p>
+              <h1 className="text-lg font-bold text-foreground tracking-tight">Mustafa Tetik</h1>
+              <p className="text-xs text-primary/60 mt-0.5">Computer Engineering</p>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1 rounded-lg hover:bg-accent"
+              className="p-1.5 rounded-lg hover:bg-accent/50 transition-colors"
               aria-label="Close sidebar"
             >
               <ChevronLeft className="h-4 w-4 text-muted-foreground" />
@@ -91,8 +92,9 @@ export function Sidebar() {
           </div>
         </div>
 
-        <nav className="flex-1 p-4">
-          <ul className="space-y-2">
+        {/* Navigation */}
+        <nav className="flex-1 p-3">
+          <ul className="space-y-1">
             {navigation.map((item) => {
               const isActive = pathname === item.href
               return (
@@ -102,10 +104,10 @@ export function Sidebar() {
                     onClick={() => {
                       if (window.innerWidth < 768) setIsOpen(false)
                     }}
-                    className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:translate-x-1 ${
+                    className={`sidebar-nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                       isActive
-                        ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                        ? "sidebar-nav-active text-foreground"
+                        : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     <item.icon className="h-4 w-4" />
@@ -117,51 +119,58 @@ export function Sidebar() {
           </ul>
         </nav>
 
-        <div className="p-4 border-t border-border">
+        {/* Bottom social/theme */}
+        <div className="p-3 border-t border-border/50">
           <div className="flex items-center justify-between">
-            <div className="flex gap-1">
-              <a href="https://github.com/tetikmustafa" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="p-2 rounded-lg hover:bg-accent text-muted-foreground hover:scale-110 transition-transform duration-200">
+            <div className="flex gap-0.5">
+              <a href="https://github.com/tetikmustafa" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
+                className="sidebar-icon-btn p-2 rounded-lg text-muted-foreground transition-all duration-200">
                 <Github className="h-4 w-4" />
               </a>
-              <a href="https://linkedin.com/in/mustafa-tetik" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="p-2 rounded-lg hover:bg-accent text-muted-foreground hover:scale-110 transition-transform duration-200">
+              <a href="https://linkedin.com/in/mustafa-tetik" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+                className="sidebar-icon-btn p-2 rounded-lg text-muted-foreground transition-all duration-200">
                 <Linkedin className="h-4 w-4" />
               </a>
             </div>
-            <button onClick={toggleTheme} className="p-2 rounded-lg hover:bg-accent text-muted-foreground hover:scale-110 transition-transform duration-200" aria-label="Toggle theme">
+            <button onClick={toggleTheme}
+              className="sidebar-icon-btn p-2 rounded-lg text-muted-foreground transition-all duration-200"
+              aria-label="Toggle theme">
               {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </button>
           </div>
         </div>
       </aside>
 
-      {/* Compact sidebar (desktop only, when closed) */}
+      {/* ── Compact sidebar (desktop only) ── */}
       <aside
-        className={`fixed left-0 top-0 z-50 h-full w-16 bg-card border-r border-border hidden md:flex flex-col transition-all duration-300 ease-out ${
+        className={`fixed left-0 top-0 z-50 h-full w-16 sidebar-glass border-r border-border/50 hidden md:flex flex-col transition-all duration-300 ease-out ${
           isOpen ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
       >
-        <div className="p-4 border-b border-border">
+        {/* Toggle */}
+        <div className="p-3 border-b border-border/50">
           <button
             onClick={() => setIsOpen(true)}
-            className="w-full flex items-center justify-center p-1 rounded-lg hover:bg-accent transition-colors"
+            className="w-full flex items-center justify-center p-2 rounded-lg hover:bg-accent/50 transition-colors"
             aria-label="Open sidebar"
           >
             <ChevronRight className="h-5 w-5 text-foreground" />
           </button>
         </div>
 
+        {/* Nav icons */}
         <nav className="flex-1 p-2">
-          <ul className="space-y-2">
+          <ul className="space-y-1">
             {navigation.map((item) => {
               const isActive = pathname === item.href
               return (
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className={`flex items-center justify-center p-2 rounded-lg text-sm transition-colors ${
+                    className={`sidebar-compact-item flex items-center justify-center p-2.5 rounded-lg text-sm transition-all duration-200 ${
                       isActive
-                        ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                        ? "sidebar-nav-active text-foreground"
+                        : "text-muted-foreground hover:text-foreground"
                     }`}
                     title={item.name}
                   >
@@ -173,14 +182,19 @@ export function Sidebar() {
           </ul>
         </nav>
 
-        <div className="p-2 border-t border-border flex flex-col items-center gap-1">
-          <a href="https://github.com/tetikmustafa" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="p-2 rounded-lg hover:bg-accent text-muted-foreground transition-all duration-200 hover:scale-110">
+        {/* Bottom icons */}
+        <div className="p-2 border-t border-border/50 flex flex-col items-center gap-0.5">
+          <a href="https://github.com/tetikmustafa" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
+            className="sidebar-icon-btn p-2.5 rounded-lg text-muted-foreground transition-all duration-200">
             <Github className="h-5 w-5" />
           </a>
-          <a href="https://linkedin.com/in/mustafa-tetik" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="p-2 rounded-lg hover:bg-accent text-muted-foreground transition-all duration-200 hover:scale-110">
+          <a href="https://linkedin.com/in/mustafa-tetik" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+            className="sidebar-icon-btn p-2.5 rounded-lg text-muted-foreground transition-all duration-200">
             <Linkedin className="h-5 w-5" />
           </a>
-          <button onClick={toggleTheme} className="p-2 rounded-lg hover:bg-accent text-muted-foreground transition-all duration-200 hover:scale-110" aria-label="Toggle theme">
+          <button onClick={toggleTheme}
+            className="sidebar-icon-btn p-2.5 rounded-lg text-muted-foreground transition-all duration-200"
+            aria-label="Toggle theme">
             {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
           </button>
         </div>
