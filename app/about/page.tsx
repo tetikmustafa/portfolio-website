@@ -4,10 +4,14 @@ import { Download, Eye, GraduationCap, Briefcase, Code } from "lucide-react"
 import { CvPreviewButton } from "./cv-preview"
 
 const skills = [
-  "Java", "Spring Boot", "MVC Architecture", "RESTful APIs",
-  "JavaScript", "React", "Python", "C", "MySQL", "Docker", "Git",
-  "Python (Pandas, NumPy, TensorFlow)", "model evaluation",
-  "data preprocessing", "REMnux", "Wireshark", "tcpdump",
+  "Agile", "Scrum", "Jira", "Bugzilla", "Postman", "SoapUI",
+  "Java", "Spring Boot", "Spring Data JPA", "MVC Architecture", 
+  "DTO", "RESTful APIs", "JWT", "Swagger",
+  "JavaScript", "React", "Next.js",  "Typescript",
+  "Pandas", "NumPy", "TensorFlow", "Model Evaluation",
+  "Data Preprocessing", "Docker Compose", 
+  "Microservices Architecture", "API Gateway", "Docker", "Git",
+   "Python", "C", "MySQL", "SQL", "Power BI", 
 ]
 
 const education = [
@@ -15,19 +19,19 @@ const education = [
     degree: "Bachelor of Science in Computer Engineering",
     school: "Marmara University",
     year: "2022-Present",
-    description: "GPA: 3.12",
+    description: "GPA: 3.23/4.00",
   },
 ]
 
 const experience = [
   {
-    title: "Sofware Engineering Intern",
-    company: "Smartera Software Solutions",
-    period: "July 2024 - September 2024",
+    title: "Part-time Data Engineer",
+    company: "Brisa Bridgestone Sabancı",
+    period: "September 2025 – Present",
     descriptions: [
-      "Gained hands-on experience in backend software development using Java and Spring Boot.",
-      "Applied Test-Driven Development (TDD) principles to write test-driven, maintainable, and reliable code.",
-      "Focused on building scalable and efficient backend services while following best practices in software development.",
+      "Gaining practical experience in Agile project management methodologies, actively participating in sprint planning and daily workflows",
+      "Working within the Business Intelligence domain to develop interactive reports using Power BI.",
+      "Processing complex datasets using Python and implementing mathematical models via Gurobi for a vehicle capacity and routing optimization project.",
     ],
   },
   {
@@ -35,9 +39,20 @@ const experience = [
     company: "Brisa Bridgestone Sabancı",
     period: "July 2025 – September 2025",
     descriptions: [
-      "Gaining experience in software lifecycle within the IT department of a corporate environment.",
-      "Utilizing platforms like Jira and Bugzilla for issue tracking, project management, and task coordination.",
-      "Contributing to documentation and test activities related to service-based architectures.",
+      "Gained experience in software lifecycle within the IT department of a corporate environment.",
+      "Utilized platforms like Jira and Bugzilla for issue tracking, project management, and task coordination.",
+      "Contributed to documentation and test activities related to service-based architectures.",
+      "Used tools like Postman and SoapUI to inspect and test API requests and responses."
+    ],
+  },
+  {
+    title: "Software Engineering Intern",
+    company: "Smartera Software Solutions",
+    period: "July 2024 - September 2024",
+    descriptions: [
+      "Gained hands-on experience in backend software development using Java and Spring Boot.",
+      "Applied Test-Driven Development (TDD) principles to write test-driven and maintainable code.",
+      "Focused on building scalable backend services while following best practices in software development.",
     ],
   },
 ]
@@ -53,16 +68,16 @@ export default function AboutPage() {
             <Card>
               <CardContent className="p-6">
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                I&apos;m a Computer Engineering student with a strong foundation in backend development, 
-                particularly using Java, Spring Boot, MVC architecture, and Docker. 
-                I&apos;m passionate about building scalable, maintainable systems and 
-                enjoy solving complex problems through clean architecture and analytical thinking. 
-                In addition to backend technologies, I&apos;m actively exploring the fields of artificial intelligence and cybersecurity.
+                As a software engineer, my aim is to build complete full stack applications. 
+                I used Java and Spring Boot to create secure RESTful APIs. 
+                I have experience designing both traditional MVC applications and scalable microservice architectures. 
+                To connect these backends to the users, I create dynamic frontends with React and Next.js. 
+                Finally, I use Docker to containerize my applications, ensuring my code is easy to deploy and works everywhere.                
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                I make a consistent effort to evaluate new opportunities, 
-                expand my technical skill set, and adapt quickly to new tools and frameworks. 
-                I value teamwork, continuous learning, and writing reliable, production-ready code.
+                I also enjoy exploring other fields of computer engineering, like Artificial Intelligence and Cybersecurity. 
+                I have trained deep learning models using TensorFlow and conducted malware analysis in secure environments. 
+                I also work with data engineering, using Python to process large datasets and build optimization models.
                 </p>
               </CardContent>
             </Card>
@@ -78,7 +93,7 @@ export default function AboutPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-4">
-                  Download my complete CV or preview it online to learn more about my experience and qualifications.
+                  Download my complete CV or preview it right here.
                 </p>
                 <div className="flex gap-4">
                   <a

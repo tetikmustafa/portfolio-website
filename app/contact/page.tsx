@@ -42,9 +42,7 @@ export default function ContactPage() {
             </CardHeader>
             <CardContent className="space-y-8">
               <p className="text-muted-foreground text-lg">
-                I am looking for internship opportunities. 
-                I&apos;m always interested in hearing about new projects and opportunities. 
-                Whether you have a question or just want to say hi, feel free to reach out through email or social media.
+              I am always available for new opportunities and collaborations.  
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
