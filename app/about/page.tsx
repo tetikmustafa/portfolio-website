@@ -110,20 +110,28 @@ export default function AboutPage() {
             </Card>
           </div>
 
-          <div className="fade-up-delay-3">
+          <div className="fade-up-delay-5">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Code className="h-5 w-5" />
-                  Skills & Technologies
+                  <Briefcase className="h-5 w-5" />
+                  Work Experience
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {skills.map((skill) => (
-                    <Badge key={skill} variant="secondary" className="text-sm py-1 px-3">
-                      {skill}
-                    </Badge>
+                <div className="space-y-6">
+                  {experience.map((exp, index) => (
+                    <div key={index} className="border-l-2 border-primary pl-4">
+                      <h3 className="font-semibold text-foreground">{exp.title}</h3>
+                      <p className="text-sm text-muted-foreground">
+                        {exp.company} | {exp.period}
+                      </p>
+                      <ul className="list-disc list-inside">
+                        {exp.descriptions.map((desc, i) => (
+                          <li key={i} className="text-sm text-muted-foreground mt-2">{desc}</li>
+                        ))}
+                      </ul>
+                    </div>
                   ))}
                 </div>
               </CardContent>
@@ -154,33 +162,26 @@ export default function AboutPage() {
             </Card>
           </div>
 
-          <div className="fade-up-delay-5">
+          <div className="fade-up-delay-3">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Briefcase className="h-5 w-5" />
-                  Work Experience
+                  <Code className="h-5 w-5" />
+                  Skills & Technologies
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-6">
-                  {experience.map((exp, index) => (
-                    <div key={index} className="border-l-2 border-primary pl-4">
-                      <h3 className="font-semibold text-foreground">{exp.title}</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {exp.company} | {exp.period}
-                      </p>
-                      <ul className="list-disc list-inside">
-                        {exp.descriptions.map((desc, i) => (
-                          <li key={i} className="text-sm text-muted-foreground mt-2">{desc}</li>
-                        ))}
-                      </ul>
-                    </div>
+                <div className="flex flex-wrap gap-2">
+                  {skills.map((skill) => (
+                    <Badge key={skill} variant="secondary" className="text-sm py-1 px-3">
+                      {skill}
+                    </Badge>
                   ))}
                 </div>
               </CardContent>
             </Card>
           </div>
+
         </div>
       </div>
     </div>
