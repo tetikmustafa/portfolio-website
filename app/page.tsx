@@ -50,8 +50,8 @@ export default function HomePage() {
                 href="/about"
                 className="block text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl hover:text-foreground transition-colors"
               >
-                Welcome! I am Mustafa, a final grade Computer Engineering
-                Student with curiosity for how different technologies connect. I
+                Welcome! I am Mustafa, a Computer Engineering
+                graduate with curiosity for how different technologies connect. I
                 enjoy designing complete systems, from the user interfaces down
                 to the data and security layers. Click to learn more about me.
               </Link>

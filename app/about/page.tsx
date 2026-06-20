@@ -3,19 +3,22 @@ import { Download, GraduationCap, Briefcase, Code } from "lucide-react"
 import { CvPreviewButton } from "./cv-preview"
 
 const skills = [
-  "Java", "Spring Boot", "MVC Architecture", 
-  "RESTful APIs", "JWT",
-  "JavaScript", "React", "Typescript",
-  "Pandas", "TensorFlow", "Model Evaluation",
-  "Microservices Architecture", "Docker", "Git",
-   "Python", "C", "SQL", "Power BI"
+  "Java", "Spring Boot", "Spring Cloud", "RESTful APIs", "JWT",
+  "JavaScript", "React", "Next.js",
+  "Python", "Pandas", "NumPy", "PyTorch", "TensorFlow",
+  "NLP", "ComfyUI",
+  "Scikit-learn",
+  "Power BI", "Power Query (M)", "DAX", "SQL Server", "SQL", "MySQL",
+  "Microservices Architecture", "MVC", "DTO", "Docker", "Docker Compose",
+  "Git", "GitHub", "Jira", "Postman", "Swagger", "SoapUI", "Bugzilla",
+  "Linux", "C#", "Unity",
 ]
 
 const education = [
   {
     degree: "Bachelor of Science in Computer Engineering",
     school: "Marmara University",
-    year: "2022-Present",
+    year: "2022-2026",
     description: "GPA: 3.23/4.00",
   },
 ]
@@ -23,33 +26,35 @@ const education = [
 const experience = [
   {
     title: "Part-time Data Engineer",
-    company: "Brisa Bridgestone Sabancı",
+    company: "Brisa Bridgestone Sabancı, Istanbul",
     period: "September 2025 – Present",
     descriptions: [
-      "Gaining practical experience in Agile project management methodologies, actively participating in sprint planning and daily workflows",
-      "Working within the Business Intelligence domain to develop interactive reports using Power BI.",
-      "Processing complex datasets using Python and implementing mathematical models via Gurobi for a vehicle capacity and routing optimization project.",
+      "Designed and managed data pipelines and ETL processes utilizing Microsoft Fabric centralize operational data into a Lakehouse architecture.",
+      "Structured raw enterprise data using Power Query (M) and built advanced DAX measure calculations, transforming complex business rules into interactive Power BI dashboards.",
+      "Integrated structured enterprise data utilizing SQL Server queries and modeled business reporting logic interacting with SAP Business Warehouse (BW).",
+      "Processed high-volume datasets using Python (Pandas, NumPy) and implemented mathematical models via Gurobi solvers for vehicle capacity and routing optimization.",
+      "Applied Agile methodologies, participating in sprint planning and daily meetings to align technical development with business metrics modeling.",
     ],
   },
   {
     title: "IT Intern",
-    company: "Brisa Bridgestone Sabancı",
+    company: "Brisa Bridgestone Sabancı, Izmit/Kocaeli",
     period: "July 2025 – September 2025",
     descriptions: [
-      "Gained experience in software lifecycle within the IT department of a corporate environment.",
-      "Utilized platforms like Jira and Bugzilla for issue tracking, project management, and task coordination.",
+      "Managed issue tracking, structured change management, and task coordination utilizing Jira and Bugzilla within a corporate enterprise governance process.",
+      "Executed comprehensive end-to-end integration testing for REST and SOAP web services utilizing Postman and SoapUI.",
       "Contributed to documentation and test activities related to service-based architectures.",
-      "Used tools like Postman and SoapUI to inspect and test API requests and responses."
     ],
   },
   {
     title: "Software Engineering Intern",
-    company: "Smartera Software Solutions",
+    company: "Smartera Software Solutions, Istanbul",
     period: "July 2024 - September 2024",
     descriptions: [
-      "Gained hands-on experience in backend software development using Java and Spring Boot.",
+      "Developed scalable backend architectures utilizing Java and Spring Boot within an isolated microservices architecture.",
+      "Built responsive and dynamic frontend interfaces utilizing React, HTML, CSS, and JavaScript to seamlessly interact with RESTful APIs.",
+      "Integrated DevOps practices and Docker containerization into the Software Development Life Cycle (SDLC).",
       "Applied Test-Driven Development (TDD) principles to write test-driven and maintainable code.",
-      "Focused on building scalable backend services while following best practices in software development.",
     ],
   },
 ]
@@ -70,16 +75,24 @@ export default function AboutPage() {
           <div className="fade-up-delay-1">
             <div className="about-section-card">
               <p className="text-base text-muted-foreground leading-relaxed mb-4">
-                As a software engineer, my aim is to build complete full stack applications. 
-                I used Java and Spring Boot to create secure RESTful APIs. 
-                I have experience designing both traditional MVC applications and scalable microservice architectures. 
-                To connect these backends to the users, I create dynamic frontends with React and Next.js. 
-                Finally, I use Docker to containerize my applications, ensuring my code is easy to deploy and works everywhere.                
+                I'm always chasing opportunities to grow. I genuinely enjoy learning new things, I pick up new
+                technologies and concepts quickly, and I thrive in team environments where I can both contribute and learn from
+                others. I'm comfortable working within Agile methodologies — sprint planning, daily stand-ups, and iterative
+                delivery feel natural to me, whether I'm in a startup or a large corporate setting.
+              </p>
+              <p className="text-base text-muted-foreground leading-relaxed mb-4">
+                My main focus is full stack software development. I build secure RESTful APIs and distributed microservice
+                architectures with Java and Spring Boot, connect them to dynamic frontends with React and Next.js, and
+                containerize everything with Docker for easy, reproducible deployment. I'm also comfortable with DevOps practices
+                and CI/CD-style workflows that keep applications easy to deploy and maintain. I've gained hands-on experience building microservice-based backends, integrating REST and SOAP APIs, and
+                working with enterprise data infrastructure — and I want to keep developing my career in this direction.
               </p>
               <p className="text-base text-muted-foreground leading-relaxed">
-                I also enjoy exploring other fields of computer engineering, like Artificial Intelligence and Cybersecurity. 
-                I have trained deep learning models using TensorFlow and conducted malware analysis in secure environments. 
-                I also work with data engineering, using Python to process large datasets and build optimization models.
+                Outside of software engineering, I enjoy exploring artificial intelligence, data engineering, and cybersecurity.
+                I've trained deep learning and computer vision models, built generative AI pipelines, processed large-scale
+                datasets to build optimization models, and conducted malware analysis in isolated lab environments. These areas
+                keep me curious and often feed back into how I think about building secure, intelligent, and well-architected
+                systems.
               </p>
             </div>
           </div>
