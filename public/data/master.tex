@@ -1,0 +1,374 @@
+%-------------------------
+% Resume in Latex
+% Author : Jake Gutierrez
+% Based off of: https://github.com/sb2nov/resume
+% License : MIT
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\input{glyphtounicode}
+
+%----------FONT OPTIONS----------
+% sans-serif
+% \usepackage[sfdefault]{FiraSans}
+% \usepackage[sfdefault]{roboto}
+% \usepackage[sfdefault]{noto-sans}
+% \usepackage[default]{sourcesanspro}
+
+% serif
+% \usepackage{CormorantGaramond}
+% \usepackage{charter}
+
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\setlength{\footskip}{4.08003pt}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-10pt}\raggedright\large\bfseries
+}{}{0em}{}[\color{black}\titlerule \vspace{-3pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-4pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabularx}{0.97\textwidth}{X r}
+      \textbf{#1} & #2 \\
+    \end{tabularx}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+    \textbf{\Huge Mustafa Tetik} \\ \vspace{10pt}
+    \small
+    \textbf{Email:} \href{mailto:tetikmustafa03@gmail.com}{\underline{tetikmustafa03@gmail.com}}
+    \textbf{LinkedIn:} \href{https://www.linkedin.com/in/mustafa-tetik/}{\underline{www.linkedin.com/in/mustafa-tetik}} 
+    \textbf{Phone:} +90 (501) 140 1274 \\
+    \textbf{GitHub:} \href{https://github.com/tetikmustafa}{\underline{github.com/tetikmustafa}} $|$
+    \textbf{Portfolio:} \href{https://mustafatetik.com}{\underline{mustafatetik.com}}
+\end{center}
+
+%-----------ABOUT-----------
+\section{About}
+  \resumeSubHeadingListStart
+
+% @id:ABOUT_FULLSTACK
+    \resumeItem{\textbf{Multidisciplinary Computer Engineering graduate} with hands-on expertise across \textbf{Backend Architecture, Data Engineering, AI, and Cybersecurity}. Engineered \textbf{microservice} systems using \textbf{Java and Spring Boot}, built \textbf{ETL} pipelines processing \textbf{300K+ rows}, and developed \textbf{Transformer-based NLP} models achieving \textbf{97.27\% accuracy}. A highly adaptable \textbf{fast learner} who thrives on mastering new technologies. Approaches complex problems with system-level architectural thinking, seamlessly bridging the gap between low-level hardware performance and enterprise-scale deployments across both startup and corporate environments.}
+% @end
+
+% @id:ABOUT_BACKEND
+    % \resumeItem{\textbf{Computer Engineering graduate} specializing in \textbf{Distributed Systems and Backend Development}. Architected scalable \textbf{microservices} with \textbf{Java 21, Spring Boot, and Spring Cloud}, orchestrating \textbf{5-container} deployments via \textbf{Docker Compose}. Experienced in applying \textbf{TDD}, standardizing \textbf{35+ RESTful APIs}, and building responsive \textbf{React} frontends. An agile and \textbf{rapid learner}, passionate about exploring new frameworks and architectural patterns to deliver clean, maintainable, and high-availability enterprise applications.}
+% @end
+
+% @id:ABOUT_DATA
+    % \resumeItem{\textbf{Computer Engineering graduate} focused on \textbf{Data Engineering, Business Intelligence, and Optimization}. Engineered centralized \textbf{ETL} pipelines in \textbf{Microsoft Fabric} processing over \textbf{300,000 rows} of operational data and designed \textbf{5+ interactive Power BI} dashboards. Formulated complex \textbf{MILP mathematical models} via \textbf{Gurobi} for logistics routing. As a highly motivated \textbf{fast learner}, quickly adapts to diverse enterprise ecosystems (\textbf{SAP BW, SQL, Python}) to transform unstructured datasets into automated, actionable business insights.}
+% @end
+
+% @id:ABOUT_AI
+    % \resumeItem{\textbf{Computer Engineering graduate} actively advancing in \textbf{Generative AI, Computer Vision, and NLP}. Co-authored published research on \textbf{Transformer LLMs (ALBERT, RoBERTa)} achieving state-of-the-art \textbf{97.27\% accuracy} on datasets exceeding \textbf{246K records}. Optimized a \textbf{Qwen 2.5 VL} diffusion pipeline for a \textbf{5-8x inference speedup} and implemented \textbf{YOLOv8} models with sub-\textbf{10ms} algorithmic latency. Driven by a passion for continuous learning, swiftly adopting cutting-edge AI architectures to build intelligent, memory-optimized, and hardware-efficient systems.}
+% @end
+
+  \resumeSubHeadingListEnd
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+% @id:EDUCATION
+    \resumeSubheading
+      {Marmara University}{Istanbul, Turkiye}
+      {Computer Engineering | GPA: 3.21}{2022 -- 2026}
+% @end
+  \resumeSubHeadingListEnd
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+% @id:EXP_BRISA_DATA
+    \resumeSubheading
+    {Part-time Data Engineer}{September 2025 -- Present}
+    {Brisa Bridgestone Sabancı, Istanbul}{}
+        \resumeItemListStart
+        \resumeItem{Engineered \textbf{Python} and \textbf{Microsoft Fabric} \textbf{ETL} pipelines to process and centralize over \textbf{300,000 rows} of unstructured operational data into a secure \textbf{Lakehouse}.}
+        \resumeItem{Developed a dynamic ingestion pipeline via \textbf{Power Query (M)} to extract conversational metrics from an external API, using automated credential rotation across multiple instances.}
+        \resumeItem{Designed and deployed \textbf{5+ interactive Power BI dashboards} with advanced \textbf{DAX} measures.}
+        \resumeItem{Formulated \textbf{MILP} mathematical models utilizing \textbf{Gurobi} for dynamic vehicle routing.}
+        \resumeItem{Integrated structured enterprise data utilizing \textbf{SQL Server} queries and modeled business reporting logic interacting with \textbf{SAP Business Warehouse (BW)}.}
+        \resumeItem{Working with \textbf{Agile} project management methodologies, participating in \textbf{sprint} planning and \textbf{daily} workflows.}
+        \resumeItemListEnd
+% @end
+
+% @id:EXP_BRISA_DIGITAL
+    \resumeSubheading
+    {Digital Transformation Intern}{July 2025 -- September 2025}
+    {Brisa Bridgestone Sabancı, Izmit/Kocaeli}{}
+        \resumeItemListStart
+        \resumeItem{Streamlined software workflows and change management, coordinating task resolution via \textbf{Jira} and \textbf{Bugzilla}.}
+        \resumeItem{Validated systems by executing integration testing for \textbf{REST} and \textbf{SOAP} services using \textbf{Postman} and \textbf{SoapUI}.}
+        \resumeItem{Authored comprehensive technical documentation for \textbf{35+ APIs} and established standardized testing protocols.}
+        \resumeItemListEnd
+% @end
+
+% @id:EXP_SMARTERA_SWE
+      \resumeSubheading
+      {Software Engineering Intern}{July 2024 -- September 2024}
+      {Smartera Software Solutions, Istanbul}{}
+      \resumeItemListStart
+        \resumeItem{Developed backend services utilizing \textbf{Java and Spring Boot} within a distributed, high-availability architecture.}
+        \resumeItem{Built responsive frontend interfaces utilizing \textbf{React and JavaScript}, consuming backend \textbf{RESTful APIs}.}
+        \resumeItem{Modeled databases via \textbf{MySQL} and \textbf{Spring Data JPA}, applying the \textbf{DTO pattern} for secure data transfer.}
+        \resumeItem{Applied \textbf{Test-Driven Development (TDD)} principles to write maintainable, bug-resistant, and reliable code.}
+        \resumeItem{Collaborated via \textbf{Git} workflows and standardized API endpoint definitions utilizing \textbf{Swagger OpenAPI}.}
+        \resumeItem{Integrated \textbf{Docker} containerization into the \textbf{SDLC} to standardize local development and testing environments.}
+      \resumeItemListEnd
+% @end
+
+  \resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Projects}
+    \resumeSubHeadingListStart
+
+% @id:PROJ_GEN_AI
+      \resumeProjectHeading
+          {\textbf{Generative AI Virtual Photography System} }{}
+          \resumeItemListStart
+            \resumeItem{Engineered a full-stack \textbf{Generative AI} virtual photography system utilizing \textbf{Stable Diffusion, ControlNet, and Qwen Image Edit (Qwen 2.5 VL)} to transform raw product photos into studio-grade visuals.}
+            \resumeItem{Orchestrated a 4-component pipeline (\textbf{FP8 UNET, 7B-parameter CLIP, VAE, Lightning LoRA}), quantizing weights to cut memory footprint by \textbf{4x} and enable local execution on \textbf{6GB-VRAM} consumer GPUs.}
+            \resumeItem{Designed automated \textbf{AI workflows} using \textbf{ComfyUI} and AuraFlow/Euler schedules, reducing diffusion sampling from \textbf{20+ to 4 steps} and achieving a \textbf{5-8x inference speedup} without quality loss.}
+            \resumeItem{Applied advanced \textbf{Prompt Engineering} across \textbf{3 distinct camera-angle pipelines}, formulating rigorous positive/negative prompt strategies to eliminate artifacts and strictly preserve product identity.}
+            \resumeItem{Architected a \textbf{React} frontend utilizing \textbf{WebSockets} for logging \textbf{12-step generation cycle}.}
+          \resumeItemListEnd
+% @end
+
+% @id:PROJ_GAME_ANALYSIS
+          \resumeProjectHeading
+          {\textbf{Game Analysis with Image Processing} }{}
+          \resumeItemListStart
+            \resumeItem{Architected an end-to-end Computer Vision system to detect physical game tiles and recommend optimal moves, utilizing a \textbf{Client-Direct} architecture with \textbf{Next.js} and an isolated \textbf{Flask} API to bypass serverless cold starts.}
+            \resumeItem{Implemented a Two-Stage Hybrid AI pipeline utilizing \textbf{YOLOv8-Nano} for localization (\textbf{99.4\% mAP50}, 41ms) and \textbf{ResNet-18} for classification (\textbf{97.26\% accuracy}, 2.88ms).}
+            \resumeItem{Formulated complex combinatorial game rules utilizing \textbf{Depth-First Search (DFS)} and \textbf{Memoization (Hash Caching)}, calculating optimal 101-point and pair-opening strategies in \textbf{under 10 milliseconds} in-browser.}
+            \resumeItem{Engineered a custom dataset of 4,432 labeled tiles across 55 classes, developing a hybrid annotation pipeline via \textbf{OpenCV} and Python scripts that accelerated manual labeling from \textbf{50+ hours to approximately 1 hour}.}
+            \resumeItem{Built an interactive \textbf{React} frontend allowing real-time manual correction of misclassified tiles, triggering instantaneous algorithm recalculations and achieving an end-to-end system latency of \textbf{150-250ms}.}
+          \resumeItemListEnd
+% @end
+
+% @id:PROJ_OMS
+        \resumeProjectHeading
+          {\textbf{Order Management System} }{}
+          \resumeItemListStart
+            \resumeItem{Architected a scalable backend system transitioning from \textbf{monolithic} to \textbf{microservices architecture} utilizing \textbf{Java 21, Spring Boot 3.3, and Spring Cloud}, decomposing business logic into \textbf{4 RESTful services}.}
+            \resumeItem{Designed \textbf{RESTful APIs} following \textbf{MVC} architecture to perform \textbf{CRUD operations}, implementing strict request validation, global error handling, and standardized \textbf{JSON} response structures.}
+            \resumeItem{Implemented \textbf{Spring Cloud Gateway} as the centralized entry point, configuring global \textbf{CORS} management, load-balanced routing, and aggregating independent endpoints into a unified \textbf{OpenAPI} documentation portal.}
+            \resumeItem{Configured a \textbf{Netflix Eureka Server} for dynamic service discovery and registration, enabling seamless, decoupled synchronous inter-service communication via \textbf{OpenFeign} clients.}
+            \resumeItem{Applied the \textbf{Database-per-service} pattern utilizing \textbf{MySQL 8} for isolated data storage. Used \textbf{Spring Data JPA, Hibernate, and Lombok} to model entities, strictly enforcing the \textbf{DTO pattern}.}
+            \resumeItem{Containerized the infrastructure into a \textbf{5-container} deployment utilizing \textbf{Docker and Docker Compose}. Engineered custom network bridges and automated \textbf{health-checks} to ensure fail-safe background deployments.}
+          \resumeItemListEnd
+% @end
+
+% @id:PROJ_SUICIDE_RESEARCH
+          \resumeProjectHeading
+          {\textbf{Research Paper: Social Media Suicide Risk Detection via Deep Learning} }{}
+          \resumeItemListStart
+            \resumeItem{Co-authored an \textbf{NLP} research paper benchmarking Transformer architectures to detect suicide-related content, achieving state-of-the-art results for early psychological intervention systems.}
+            \resumeItem{Engineered a perfectly balanced dataset by merging two public Reddit repositories into \textbf{246,228 labeled posts}, utilizing \textbf{NLTK} for comprehensive text normalization (tokenization, stopword/URL removal).}
+            \resumeItem{Fine-tuned and benchmarked \textbf{T5-small} (60M parameters) and \textbf{ALBERT} (12M parameters) transformer models utilizing a 70/30 train-test split, batch size of 32, and a 2e-5 learning rate.}
+            \resumeItem{Achieved a peak classification accuracy of \textbf{97.27\%} with ALBERT, outperforming T5-small (\textbf{97.00\%}) and significantly exceeding traditional baseline models (CNN, LSTM, BiGRU) reported in literature.}
+            \resumeItem{Demonstrated architectural efficiency by proving that ALBERT's parameter-sharing design achieved superior accuracy while utilizing an \textbf{80\% smaller memory footprint} than T5-small.}
+          \resumeItemListEnd
+% @end
+
+% @id:PROJ_RANSOMWARE
+        \resumeProjectHeading
+          {\textbf{Ransomware Simulation \& Analysis} }{}
+          \resumeItemListStart
+            \resumeItem{Architected a fully isolated malware sandbox via \textbf{VirtualBox} (Host-Only network), utilizing \textbf{Windows 10} and \textbf{REMnux v7 VMs} to safely detonate the \textbf{WannaCry} ransomware (MS17-010).}
+            \resumeItem{Configured \textbf{INetSim} to emulate DNS and HTTP(S) services to bypass sandbox evasion tactics, capturing live network packets and lateral movement attempts utilizing \textbf{Wireshark and tcpdump}.}
+            \resumeItem{Performed static binary analysis utilizing \textbf{PEStudio and Sysinternals Strings}, extracting SHA-256 hashes (\textbf{67/71 detection rate}) and identifying embedded cryptographic APIs (\textbf{AES/RSA}).}
+            \resumeItem{Executed dynamic host forensics utilizing \textbf{Procmon, Process Explorer, and Regshot} to trace hierarchical process injection and system-file spoofing (\textit{diskpart.exe}).}
+            \resumeItem{Mapped the complete attack lifecycle by analyzing \textbf{.WNCRY} file encryption behaviors and specific registry modifications used to establish system persistence.}
+          \resumeItemListEnd
+% @end
+
+% @id:PROJ_PORTFOLIO
+          \resumeProjectHeading
+          {\textbf{Personal Portfolio Web Application} }{}
+          \resumeItemListStart
+            \resumeItem{Architected a responsive web application utilizing the \textbf{Next.js 15 App Router, React 19, and TypeScript}, configuring strict \textbf{Static Site Generation (SSG)} protocols for zero-dependency cloud-edge deployments.}
+            \resumeItem{Engineered a custom dark/light theme toggle mechanism via inline script injection, completely preventing \textbf{Flash of Unstyled Content (FOUC)} and hydration mismatches during client-side rendering.}
+            \resumeItem{Designed a modern UI/UX with \textbf{Tailwind CSS} and reusable \textbf{Shadcn UI} components, leveraging GPU-accelerated pure CSS keyframes to ensure 60fps rendering for complex micro-interactions.}
+            \resumeItem{Structured type-safe data models to dynamically map \textbf{10+ diverse engineering projects} and interactive timelines into a responsive grid layout.}
+            \resumeItem{Implemented technical \textbf{SEO} best practices (Next.js Metadata API, OpenGraph) and semantic \textbf{a11y} standards, managing continuous deployment workflows via \textbf{Git and GitHub}.}
+          \resumeItemListEnd
+% @end
+
+% @id:PROJ_LOGISTICS
+      \resumeProjectHeading
+          {\textbf{Dynamic Logistics Routing \& Optimization Modeling} }{}
+          \resumeItemListStart
+            \resumeItem{Formulated \textbf{MILP} models to resolve dynamic vehicle capacity constraints and complex logistics bottlenecks.}
+            \resumeItem{Processed \textbf{3000+ rows} of operational datasets utilizing \textbf{Python and Pyomo}, deploying \textbf{Gurobi solvers}.}
+            \resumeItem{Optimized fleet utilization and route planning algorithms, significantly reducing simulated computation times.}
+          \resumeItemListEnd
+% @end
+
+% @id:PROJ_PACMAN
+      \resumeProjectHeading
+          {\textbf{Multiplayer Pacman Game } }{}
+          \resumeItemListStart
+            \resumeItem{Developed an event-driven, \textbf{5-player} multiplayer arcade game utilizing \textbf{Unity and C\#}.}
+            \resumeItem{Implemented \textbf{Photon Unity Networking (PUN)} to orchestrate client-server state synchronization, utilizing \textbf{RPCs (Remote Procedure Calls)} for precise player movement tracking.}
+          \resumeItemListEnd
+% @end
+
+% @id:PROJ_ASSEMBLY
+      \resumeProjectHeading
+          {\textbf{Assembly Car Game (Low-Level Programming)} }{}
+          \resumeItemListStart
+            \resumeItem{Engineered a logic control simulation utilizing \textbf{8086 Assembly}, executed on the \textbf{Emu8086} emulator.}
+            \resumeItem{Manipulated BIOS interrupts and managed \textbf{register-level} memory for direct VGA graphics rendering.}
+          \resumeItemListEnd
+% @end
+
+% @id:PROJ_SOLAR
+      \resumeProjectHeading
+          {\textbf{Solar System 3D Web Model} }{}
+          \resumeItemListStart
+            \resumeItem{Architected an interactive 3D simulation of the Solar System utilizing \textbf{JavaScript, WebGL, and Three.js}.}
+            \resumeItem{Implemented complex orbital mechanics to accurately model planetary motion.}
+          \resumeItemListEnd
+% @end
+
+% @id:PROJ_DNS
+      \resumeProjectHeading
+          {\textbf{DNS \& Mail Server Administration} }{}
+          \resumeItemListStart
+            \resumeItem{Deployed secure network services on a \textbf{Linux} server environment, configuring firewall and routing rules.}
+            \resumeItem{Managed DNS infrastructure by establishing precise zone files and routing records (\textbf{A, MX, CNAME, TXT}).}
+            \resumeItem{Configured a mail server ecosystem, implementing \textbf{SPF, DKIM, and DMARC} authentication protocols.}
+          \resumeItemListEnd
+% @end
+
+% @id:PROJ_SYLLABUS
+      \resumeProjectHeading
+          {\textbf{Syllabus Creator App} }{}
+          \resumeItemListStart
+            \resumeItem{Engineered a robust desktop scheduling application utilizing \textbf{Java and JavaFX}, enforcing strict \textbf{Object-Oriented Programming (OOP)} principles and the \textbf{MVC} design pattern.}
+            \resumeItem{Implemented a custom algorithm to prevent overlapping courses across \textbf{multi-user} configuration profiles.}
+            \resumeItem{Designed an intuitive GUI featuring dynamic data binding and robust local data persistence methodologies.}
+          \resumeItemListEnd
+% @end
+
+% @id:PROJ_HEALTHCARE_RESEARCH
+          \resumeProjectHeading
+          {\textbf{Research Paper: Healthcare Sentiment Analysis via Advanced NLP} }{}
+          \resumeItemListStart
+            \resumeItem{Co-authored an NLP research paper published in \textit{"Yapay Zekâ Tabanlı Sistemler: Teori, Uygulama ve Gelecek Perspektifleri-2"} (BİDGE Yayınları), processing \textbf{12,600+ patient reviews} via NHS and RateMDs APIs.}
+            \resumeItem{Mitigated model bias and resolved \textbf{imbalanced data} challenges by implementing rigorous undersampling techniques to generate a perfectly balanced training corpus.}
+            \resumeItem{Architected a comprehensive benchmark comparing Machine Learning (\textbf{SVM, XGBoost, CatBoost}), Deep Learning (\textbf{1D CNN, textRNN, textGCN}), and \textbf{Transformer} LLMs (\textbf{RoBERTa, DistilBERT}).}
+            \resumeItem{Evaluated architectural scalability across dynamic train-test splits (70/30 and 80/20), tracking \textbf{Accuracy, F1-Score, Precision, and Recall} metrics.}
+            \resumeItem{Achieved a peak classification accuracy of \textbf{76\%} and \textbf{75\% F1-Score} utilizing \textbf{RoBERTa}, while diagnosing and documenting critical \textbf{overfitting} tendencies in conventional CNN/RNN models.}
+          \resumeItemListEnd
+% @end
+
+    \resumeSubHeadingListEnd
+
+%-----------TECHNICAL STACK-----------
+\section{Tech Stack}
+% @id:TECH_STACK
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Programming Languages}{: Java, Python, TypeScript, JavaScript, C\#, SQL, DAX, M (Power Query), C, Assembly (8086)} \\
+     \textbf{Backend \& Microservices}{: Spring Boot, Spring Cloud (Gateway, Eureka), OpenFeign, RESTful APIs, Flask, FastAPI, Spring Data JPA, Hibernate, JWT, DTO, MVC} \\
+     \textbf{Frontend \& Web Technologies}{: React, Next.js (App Router), Tailwind CSS, Vite, WebSockets, Shadcn UI, Three.js, WebGL} \\
+     \textbf{Data Engineering, BI \& Optimization}{: Microsoft Fabric, Power BI, SAP BW, SQL Server, ETL Pipelines, Gurobi, Pyomo, MILP} \\
+     \textbf{AI, ML \& Computer Vision}{: PyTorch, TensorFlow, LLMs (T5, ALBERT, RoBERTa), YOLOv8, ResNet, Generative AI (Stable Diffusion, Qwen, ComfyUI, LoRA), NLP (NLTK), OpenCV} \\
+     \textbf{Cybersecurity \& System Admin}{: Malware Analysis, REMnux, Wireshark, INetSim, Sysinternals (Procmon, Regshot), PEStudio, Linux, DNS/Mail Security (SPF, DKIM, DMARC)} \\
+     \textbf{DevOps, Databases \& Tools}{: Docker, Docker Compose, Git, GitHub, MySQL, PostgreSQL, Swagger (OpenAPI), Postman, SoapUI, Jira, Bugzilla, Unity, Roboflow}
+    }}
+ \end{itemize}
+% @end
+
+%-----------LANGUAGES & AFFILIATIONS-----------
+\section{Languages\hspace{7.5cm}Affiliations}
+% @id:LANG_AFFIL
+\begin{tabularx}{\textwidth\vspace{-20pt}}{X X}
+    \begin{itemize}[leftmargin=0.15in, label={} ]
+        \small\item \textbf{Turkish}{: Native} 
+        \vspace{-8pt}\item \textbf{English}{: B2}
+    \end{itemize} 
+    &
+    \begin{itemize}[leftmargin=0.15in, label={}]
+        \small\item Sabancı Foundation Scholar
+    \end{itemize}
+\end{tabularx}
+% @end
+
+\end{document}

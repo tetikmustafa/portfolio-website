@@ -3,13 +3,14 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Home, User, FolderOpen, Mail, Moon, Sun, Github, Linkedin, ChevronLeft, ChevronRight, Menu } from "lucide-react"
+import { Home, User, FolderOpen, Mail, Moon, Sun, Github, Linkedin, ChevronLeft, ChevronRight, Menu, Wrench } from "lucide-react"
 
 const navigation = [
   { name: "Home", href: "/", icon: Home },
   { name: "About", href: "/about", icon: User },
   { name: "Projects", href: "/projects", icon: FolderOpen },
   { name: "Contact", href: "/contact", icon: Mail },
+  { name: "Tools", href: "/tools/cv-builder", icon: Wrench },
 ]
 
 export function Sidebar() {
@@ -96,7 +97,7 @@ export function Sidebar() {
         <nav className="flex-1 p-3">
           <ul className="space-y-1">
             {navigation.map((item) => {
-              const isActive = pathname === item.href
+              const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href)
               return (
                 <li key={item.name}>
                   <Link
@@ -162,7 +163,7 @@ export function Sidebar() {
         <nav className="flex-1 p-2">
           <ul className="space-y-1">
             {navigation.map((item) => {
-              const isActive = pathname === item.href
+              const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href)
               return (
                 <li key={item.name}>
                   <Link
