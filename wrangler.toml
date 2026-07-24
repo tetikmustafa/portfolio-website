@@ -1,2 +1,20 @@
-compatibility_date = "2024-09-23"
+# Cloudflare Workers configuration for @opennextjs/cloudflare
+# Build command: npx opennextjs-cloudflare build
+# nodejs_compat is ON — required by the OpenNext adapter for Node.js API support.
+
+name = "portfolio-website"
+main = ".open-next/worker.js"
+compatibility_date = "2026-07-25"
 compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+[observability]
+enabled = true
+
+[vars]
+# Secrets (GEMINI_API_KEY, OPENROUTER_API_KEY, UPSTASH_REDIS_REST_URL,
+# UPSTASH_REDIS_REST_TOKEN, TURNSTILE_SECRET_KEY, etc.) are set in the
+# Cloudflare dashboard project settings, not here.
