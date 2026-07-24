@@ -105,7 +105,7 @@ export default function HomePage() {
                   key={index}
                   className={`timeline-zigzag-item group cursor-pointer ${index % 2 === 0 ? 'timeline-right' : 'timeline-left'}`}
                 >
-                  <div className="timeline-zigzag-dot transition-transform duration-300 group-hover:scale-125" />
+                  <div className="timeline-zigzag-dot transition-transform duration-300 group-hover:scale-200" />
                   <div className="timeline-zigzag-content transition-transform duration-300 group-hover:-translate-y-1">
                     <h3 className="font-semibold text-foreground text-sm leading-snug group-hover:text-primary transition-colors">
                       {exp.title}
