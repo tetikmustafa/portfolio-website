@@ -4,7 +4,6 @@
  * Edge runtime — fully Cloudflare Pages compatible.
  */
 
-export const runtime = 'edge';
 
 import { verifyTurnstile } from '@/lib/turnstile';
 import { compileLimiter, checkRateLimit, rateLimitResponse } from '@/lib/rate-limit';

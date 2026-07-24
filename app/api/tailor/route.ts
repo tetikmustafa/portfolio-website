@@ -1,4 +1,3 @@
-export const runtime = 'edge';
 
 import { verifyTurnstile } from '@/lib/turnstile';
 import { tailorLimiter, checkRateLimit, rateLimitResponse } from '@/lib/rate-limit';
