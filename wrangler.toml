@@ -4,7 +4,8 @@
 
 name = "portfolio-website"
 main = ".open-next/worker.js"
-compatibility_date = "2026-07-25"
+pages_build_output_dir = ".open-next/assets"
+compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
 [assets]
