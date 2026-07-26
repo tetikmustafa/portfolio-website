@@ -15,18 +15,18 @@ STEP 1 — Job Description Analysis:
 Identify the job's core focus (e.g. Backend, Data Engineering, AI/Computer Vision, IT Audit, Full Stack) and extract its must-have technologies, tools, and keywords.
 
 STEP 2 — About Section: Reuse or Synthesize:
-The master CV contains several existing "About" variants (marked \`% @id:ABOUT_*\`), each with a different focus (Full Stack, Backend, Data, AI). You have two options — choose whichever produces the strongest match:
-  (a) Reuse one existing variant nearly as-is if it already matches the job's focus well, lightly tuning its keywords to the specific JD, OR
-  (b) Synthesize a brand-new "About" paragraph by blending phrasing, achievements, and technical language from multiple existing variants plus relevant details drawn from the Experience and Projects sections, written specifically for this job.
+The master CV may contain one or more existing "About" variants (marked \`% @id:ABOUT\` or \`% @id:ABOUT_*\`), each possibly reflecting a different specialization focus.
+  (a) If multiple variants exist, reuse the one that best matches the job's focus, lightly tuning its keywords to the specific JD, OR synthesize a brand-new "About" paragraph by blending phrasing, achievements, and technical language from multiple existing variants plus relevant details drawn from the Experience and Projects sections, written specifically for this job.
+  (b) If only one About variant exists, lightly tailor its wording and keyword emphasis to this specific job while preserving its real substance.
   In either case, the final About paragraph MUST:
-  - Open by identifying as a Computer Engineering graduate specialized toward the job's focus area.
+  - Open by identifying the candidate's field/specialization in a way that matches the job's focus area, based on the degree/background actually stated in the master CV — never assume a specific field that isn't in the source.
   - Be dense with bolded (\`\\\\textbf{}\`) keywords and quantifiable achievements (percentages, row counts, latency figures, accuracy scores, team/service counts) pulled from the real data in the master CV — never invent new numbers that don't exist anywhere in the source material.
-  - Explicitly convey that the candidate is a fast learner who enjoys picking up new technologies and adapting quickly to new stacks (this trait must appear in every generated About, phrased naturally, not identically every time).
-  - Match the tone, sentence rhythm, and confidence level of the existing ABOUT_* variants (dense, technical, achievement-forward — not generic or modest).
-  - End up as exactly ONE active \`\\\\resumeItem\` in the About section. Every other \`% @id:ABOUT_*\` block (whether reused, blended-from, or unused) must be fully commented out per the Hidden Archive rule below.
+  - If the existing About content already emphasizes personal traits (e.g. being a fast learner, adapting quickly to new technologies), preserve that emphasis naturally, phrased differently each time rather than identically — do not introduce this or any other personality trait if it isn't already present somewhere in the source material.
+  - Match the tone, sentence rhythm, and confidence level of the existing About content (dense, technical, achievement-forward — not generic or modest).
+  - End up as exactly ONE active \`\\\\resumeItem\` in the About section. Every other \`% @id:ABOUT*\` block (whether reused, blended-from, or unused) must be fully commented out per the Hidden Archive rule below.
 
 STEP 3 — Experience: Filter, Never Reorder or Remove Entries:
-All three Experience entries (\`EXP_BRISA_DATA\`, \`EXP_BRISA_DIGITAL\`, \`EXP_SMARTERA_SWE\`) MUST remain present, visible, and in their original reverse-chronological order — never remove, hide, merge, or reorder an entire experience entry.
+Every \`% @id:EXP_*\` block found in the document MUST remain present, visible, and in its original reverse-chronological order — never remove, hide, merge, or reorder an entire experience entry, regardless of how many exist.
 Within each entry, you MAY:
   - Comment out individual bullet points that are irrelevant to this job.
   - Reword or shorten bullets to weave in JD keywords naturally, as long as you stay faithful to what the original bullet actually claims — never fabricate a technology, metric, or outcome that isn't already present somewhere in the master CV for that role.
