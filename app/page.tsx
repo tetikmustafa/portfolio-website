@@ -3,12 +3,12 @@ import { ArrowRight, Download } from "lucide-react";
 
 const featuredProjects = [
   {
-    name: "Order Managing App",
-    description: "An order management application with Spring Boot backend.",
+    name: "AI-Powered ATS Resume Tailoring Platform",
+    description: "Next.js & Cloudflare Workers powered full-stack application with LLM fallback chains.",
   },
   {
-    name: "Deep Learning Models Research Paper",
-    description: "AI-driven data analysis & prediction model.",
+    name: "Generative AI Virtual Photography System",
+    description: "Stable Diffusion, ControlNet, and Qwen integration for local GPU product photography.",
   },
 ];
 
@@ -19,7 +19,7 @@ const experience = [
     period: "Sep 2025 – Present",
   },
   {
-    title: "IT Intern",
+    title: "Digital Transformation Intern",
     company: "Brisa Bridgestone Sabancı",
     period: "Jul 2025 – Sep 2025",
   },

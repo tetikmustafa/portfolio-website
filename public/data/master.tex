@@ -196,6 +196,18 @@
 \section{Projects}
     \resumeSubHeadingListStart
 
+% @id:PROJ_AI_CV_TAILOR
+      \resumeProjectHeading
+          {\textbf{AI-Powered ATS Resume Tailoring Platform} }{}
+          \resumeItemListStart
+            \resumeItem{Architected a full-stack \textbf{AI resume tailoring platform} using \textbf{Next.js 15, TypeScript, and Cloudflare Workers} (OpenNext), automating job-specific resume customization end-to-end.}
+            \resumeItem{Engineered a \textbf{multi-provider LLM abstraction layer} spanning \textbf{5 AI providers} (Gemini, OpenAI, Claude, DeepSeek, OpenRouter) with a config-driven fallback chain ensuring zero-downtime failover.}
+            \resumeItem{Designed a deterministic \textbf{compile-verify-retry pipeline} measuring real compiled PDF line density against a \textbf{54-line capacity model} to guarantee exact one-page ATS output.}
+            \resumeItem{Built an AI-driven \textbf{CV format converter} ingesting LaTeX, PDF, and DOCX resumes via \textbf{unpdf and Mammoth}, remapping any input into a structured template with zero data fabrication.}
+            \resumeItem{Secured public-facing API routes with \textbf{Cloudflare Turnstile} verification and \textbf{Upstash Redis} rate limiting, preventing abuse across serverless compile and inference endpoints.}
+          \resumeItemListEnd
+% @end
+
 % @id:PROJ_GEN_AI
       \resumeProjectHeading
           {\textbf{Generative AI Virtual Photography System} }{}

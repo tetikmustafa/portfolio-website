@@ -3,23 +3,21 @@ import { Download, GraduationCap, Briefcase, Code } from "lucide-react"
 import { CvPreviewButton } from "./cv-preview"
 
 const skills = [
-  "Java", "Spring Boot", "Spring Cloud", "RESTful APIs", "JWT",
-  "JavaScript", "React", "Next.js",
-  "Python", "Pandas", "NumPy", "PyTorch", "TensorFlow",
-  "NLP", "ComfyUI",
-  "Scikit-learn",
-  "Power BI", "Power Query (M)", "DAX", "SQL Server", "SQL", "MySQL",
-  "Microservices Architecture", "MVC", "DTO", "Docker", "Docker Compose",
-  "Git", "GitHub", "Jira", "Postman", "Swagger", "SoapUI", "Bugzilla",
-  "Linux", "C#", "Unity",
+  "Java", "Python", "TypeScript", "JavaScript", "C#", "SQL", "DAX", "M (Power Query)", "C", "Assembly (8086)",
+  "Spring Boot", "Spring Cloud (Gateway, Eureka)", "OpenFeign", "RESTful APIs", "Flask", "FastAPI", "Spring Data JPA", "Hibernate", "JWT", "DTO", "MVC",
+  "React", "Next.js (App Router)", "Tailwind CSS", "Vite", "WebSockets", "Shadcn UI", "Three.js", "WebGL",
+  "Microsoft Fabric", "Power BI", "SAP BW", "SQL Server", "ETL Pipelines", "Gurobi", "Pyomo", "MILP",
+  "PyTorch", "TensorFlow", "LLMs (T5, ALBERT, RoBERTa)", "YOLOv8", "ResNet", "Generative AI (Stable Diffusion, Qwen, ComfyUI, LoRA)", "NLP (NLTK)", "OpenCV",
+  "Malware Analysis", "REMnux", "Wireshark", "INetSim", "Sysinternals (Procmon, Regshot)", "PEStudio", "Linux", "DNS/Mail Security (SPF, DKIM, DMARC)",
+  "Docker", "Docker Compose", "Git", "GitHub", "MySQL", "PostgreSQL", "Swagger (OpenAPI)", "Postman", "SoapUI", "Jira", "Bugzilla", "Unity", "Roboflow"
 ]
 
 const education = [
   {
-    degree: "Bachelor of Science in Computer Engineering",
+    degree: "Computer Engineering",
     school: "Marmara University",
-    year: "2022-2026",
-    description: "GPA: 3.23/4.00",
+    year: "2022 - 2026",
+    description: "GPA: 3.21",
   },
 ]
 
@@ -29,21 +27,22 @@ const experience = [
     company: "Brisa Bridgestone Sabancı, Istanbul",
     period: "September 2025 – Present",
     descriptions: [
-      "Designed and managed data pipelines and ETL processes utilizing Microsoft Fabric centralize operational data into a Lakehouse architecture.",
-      "Structured raw enterprise data using Power Query (M) and built advanced DAX measure calculations, transforming complex business rules into interactive Power BI dashboards.",
+      "Engineered Python and Microsoft Fabric ETL pipelines to process and centralize over 300,000 rows of unstructured operational data into a secure Lakehouse.",
+      "Developed a dynamic ingestion pipeline via Power Query (M) to extract conversational metrics from an external API, using automated credential rotation across multiple instances.",
+      "Designed and deployed 5+ interactive Power BI dashboards with advanced DAX measures.",
+      "Formulated MILP mathematical models utilizing Gurobi for dynamic vehicle routing.",
       "Integrated structured enterprise data utilizing SQL Server queries and modeled business reporting logic interacting with SAP Business Warehouse (BW).",
-      "Processed high-volume datasets using Python (Pandas, NumPy) and implemented mathematical models via Gurobi solvers for vehicle capacity and routing optimization.",
-      "Applied Agile methodologies, participating in sprint planning and daily meetings to align technical development with business metrics modeling.",
+      "Working with Agile project management methodologies, participating in sprint planning and daily workflows.",
     ],
   },
   {
-    title: "IT Intern",
+    title: "Digital Transformation Intern",
     company: "Brisa Bridgestone Sabancı, Izmit/Kocaeli",
     period: "July 2025 – September 2025",
     descriptions: [
-      "Managed issue tracking, structured change management, and task coordination utilizing Jira and Bugzilla within a corporate enterprise governance process.",
-      "Executed comprehensive end-to-end integration testing for REST and SOAP web services utilizing Postman and SoapUI.",
-      "Contributed to documentation and test activities related to service-based architectures.",
+      "Streamlined software workflows and change management, coordinating task resolution via Jira and Bugzilla.",
+      "Validated systems by executing integration testing for REST and SOAP services using Postman and SoapUI.",
+      "Authored comprehensive technical documentation for 35+ APIs and established standardized testing protocols.",
     ],
   },
   {
@@ -51,10 +50,12 @@ const experience = [
     company: "Smartera Software Solutions, Istanbul",
     period: "July 2024 - September 2024",
     descriptions: [
-      "Developed scalable backend architectures utilizing Java and Spring Boot within an isolated microservices architecture.",
-      "Built responsive and dynamic frontend interfaces utilizing React, HTML, CSS, and JavaScript to seamlessly interact with RESTful APIs.",
-      "Integrated DevOps practices and Docker containerization into the Software Development Life Cycle (SDLC).",
-      "Applied Test-Driven Development (TDD) principles to write test-driven and maintainable code.",
+      "Developed backend services utilizing Java and Spring Boot within a distributed, high-availability architecture.",
+      "Built responsive frontend interfaces utilizing React and JavaScript, consuming backend RESTful APIs.",
+      "Modeled databases via MySQL and Spring Data JPA, applying the DTO pattern for secure data transfer.",
+      "Applied Test-Driven Development (TDD) principles to write maintainable, bug-resistant, and reliable code.",
+      "Collaborated via Git workflows and standardized API endpoint definitions utilizing Swagger OpenAPI.",
+      "Integrated Docker containerization into the SDLC to standardize local development and testing environments.",
     ],
   },
 ]
@@ -75,24 +76,13 @@ export default function AboutPage() {
           <div className="fade-up-delay-1">
             <div className="about-section-card">
               <p className="text-base text-muted-foreground leading-relaxed mb-4">
-                I'm always chasing opportunities to grow. I genuinely enjoy learning new things, I pick up new
-                technologies and concepts quickly, and I thrive in team environments where I can both contribute and learn from
-                others. I'm comfortable working within Agile methodologies — sprint planning, daily stand-ups, and iterative
-                delivery feel natural to me, whether I'm in a startup or a large corporate setting.
+                I am a multidisciplinary Computer Engineering graduate with hands-on expertise across Backend Architecture, Data Engineering, AI, and Cybersecurity. I genuinely enjoy learning new things, and I thrive on mastering new technologies and concepts quickly. Approaching complex problems with system-level architectural thinking feels natural to me, seamlessly bridging the gap between low-level hardware performance and enterprise-scale deployments.
               </p>
               <p className="text-base text-muted-foreground leading-relaxed mb-4">
-                My main focus is full stack software development. I build secure RESTful APIs and distributed microservice
-                architectures with Java and Spring Boot, connect them to dynamic frontends with React and Next.js, and
-                containerize everything with Docker for easy, reproducible deployment. I'm also comfortable with DevOps practices
-                and CI/CD-style workflows that keep applications easy to deploy and maintain. I've gained hands-on experience building microservice-based backends, integrating REST and SOAP APIs, and
-                working with enterprise data infrastructure — and I want to keep developing my career in this direction.
+                My main focus is full stack software development and data engineering. I architect scalable microservices with Java, Spring Boot, and Spring Cloud, connect them to dynamic frontends with React and Next.js, and containerize everything with Docker. In the data space, I engineer centralized ETL pipelines in Microsoft Fabric processing hundreds of thousands of rows, and I design interactive Power BI dashboards to transform unstructured datasets into actionable business insights.
               </p>
               <p className="text-base text-muted-foreground leading-relaxed">
-                Outside of software engineering, I enjoy exploring artificial intelligence, data engineering, and cybersecurity.
-                I've trained deep learning and computer vision models, built generative AI pipelines, processed large-scale
-                datasets to build optimization models, and conducted malware analysis in isolated lab environments. These areas
-                keep me curious and often feed back into how I think about building secure, intelligent, and well-architected
-                systems.
+                Outside of traditional backend development, I actively advance my knowledge in Generative AI, Computer Vision, and NLP. I have co-authored published research on Transformer LLMs achieving state-of-the-art accuracy, optimized diffusion pipelines for massive inference speedups, and conducted malware analysis in isolated cybersecurity lab environments. These diverse areas keep me curious and feed back into how I think about building secure, intelligent, and well-architected systems.
               </p>
             </div>
           </div>
