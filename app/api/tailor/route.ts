@@ -8,6 +8,10 @@ import {
 } from '@/lib/constants';
 import { callWithFallbackChain, callSpecificProvider } from '@/lib/llm/registry';
 import { LLMFatalError } from '@/lib/llm/types';
+import { TAILOR_SYSTEM_PROMPT } from '@/lib/tailor/systemPrompt';
+import { PAGE_LINE_CAPACITY, SLACK_THRESHOLD, OVERFLOW_BUFFER } from '@/lib/tailor/constants';
+import { compileLatexToPdf } from '@/lib/compile/compileLatex';
+import { analyzePdfPages, type PageAnalysis } from '@/lib/pdf/analyzePages';
 
 /** The JSON shape we expect from the LLM. */
 interface TailorResponse {
@@ -25,86 +29,43 @@ const TAILOR_SCHEMA = {
   required: ['tailoredLatex', 'coverMail'],
 };
 
-const SYSTEM_PROMPT = `You are an expert IT Recruiter, ATS optimization specialist, and LaTeX formatter with 15+ years of experience tailoring resumes for technical roles.
+const MAX_SHRINK_ATTEMPTS = 2;
+const MAX_GROW_ATTEMPTS = 1;
 
-Return ONLY a valid JSON object with EXACTLY two keys: 'tailoredLatex' and 'coverMail'.
+/**
+ * Build a precise shrink prompt using the measured overflow in lines.
+ */
+function buildShrinkPrompt(latex: string, overflowLines: number): string {
+  const cutTarget = overflowLines + OVERFLOW_BUFFER;
+  return `Your previous tailoredLatex compiled to 2 pages. The overflow onto page 2 measured exactly ${overflowLines} lines. This is a precise, verified measurement — not an estimate.
 
-===========================================
-YOUR WORKFLOW (follow in this exact order)
-===========================================
+Cut approximately ${cutTarget} lines total (the measured overflow plus a small safety margin) — no more than that. Do not over-cut; the goal is the minimum trim that brings this back to exactly 1 page, not maximum brevity. Use this priority order:
+1. Shorten any bullet still over ~16 words to hit that target.
+2. If still short of the target, drop the single least JD-relevant bullet from whichever Experience entry or Project currently has the most bullets (never below 2 bullets per Experience entry, never remove an entire entry).
+3. Trim Tech Stack category lines to their 5-6 most relevant items only if not already done.
 
-STEP 1 — Job Description Analysis:
-Identify the job's core focus (e.g. Backend, Data Engineering, AI/Computer Vision, IT Audit, Full Stack) and extract its must-have technologies, tools, and keywords.
+Do not re-select different About text or different Projects — only reduce length from the current content, by the precise amount above. Return the full corrected document in the same tailoredLatex/coverMail JSON format, following all the same LaTeX rules (double-escaped backslashes, @id markers preserved exactly, locked sections untouched).
 
-STEP 2 — About Section: Reuse or Synthesize:
-The master CV contains several existing "About" variants (marked \`% @id:ABOUT_*\`), each with a different focus (Full Stack, Backend, Data, AI). You have two options — choose whichever produces the strongest match:
-  (a) Reuse one existing variant nearly as-is if it already matches the job's focus well, lightly tuning its keywords to the specific JD, OR
-  (b) Synthesize a brand-new "About" paragraph by blending phrasing, achievements, and technical language from multiple existing variants plus relevant details drawn from the Experience and Projects sections, written specifically for this job.
-  In either case, the final About paragraph MUST:
-  - Open by identifying as a Computer Engineering graduate specialized toward the job's focus area.
-  - Be dense with bolded (\`\\\\textbf{}\`) keywords and quantifiable achievements (percentages, row counts, latency figures, accuracy scores, team/service counts) pulled from the real data in the master CV — never invent new numbers that don't exist anywhere in the source material.
-  - Explicitly convey that the candidate is a fast learner who enjoys picking up new technologies and adapting quickly to new stacks (this trait must appear in every generated About, phrased naturally, not identically every time).
-  - Match the tone, sentence rhythm, and confidence level of the existing ABOUT_* variants (dense, technical, achievement-forward — not generic or modest).
-  - End up as exactly ONE active \`\\\\resumeItem\` in the About section. Every other \`% @id:ABOUT_*\` block (whether reused, blended-from, or unused) must be fully commented out per the Hidden Archive rule below.
+Current tailoredLatex to trim:
+${latex}`;
+}
 
-STEP 3 — Experience: Filter, Never Reorder or Remove Entries:
-All three Experience entries (\`EXP_BRISA_DATA\`, \`EXP_BRISA_DIGITAL\`, \`EXP_SMARTERA_SWE\`) MUST remain present, visible, and in their original reverse-chronological order — never remove, hide, merge, or reorder an entire experience entry.
-Within each entry, you MAY:
-  - Comment out individual bullet points that are irrelevant to this job.
-  - Reword or shorten bullets to weave in JD keywords naturally, as long as you stay faithful to what the original bullet actually claims — never fabricate a technology, metric, or outcome that isn't already present somewhere in the master CV for that role.
-  - Keep every retained bullet dense with bolded keywords and numbers; prioritize the bullets with the strongest quantifiable claims when deciding what to keep if space is tight.
+/**
+ * Build a grow-back prompt to fill measured slack with real archived content.
+ */
+function buildGrowBackPrompt(latex: string, slackLines: number): string {
+  return `Your previous tailoredLatex compiled successfully to exactly 1 page, but with ${slackLines} lines of unused space remaining out of the page's ~${PAGE_LINE_CAPACITY}-line capacity. This is real, measured slack — the page has visible room for more content.
 
-STEP 4 — Projects: Select Exactly 2:
-From all \`% @id:PROJ_*\` blocks, select the 2 projects most relevant to this specific job's focus and required technologies. Comment out every other project block in full (see Hidden Archive rule).
-Within the 2 selected projects, apply the same bullet-level rules as Experience: trim, reword, and emphasize keywords/metrics, staying faithful to the original technical content — make these two projects as compelling and attention-grabbing as possible, since they now carry the full weight of demonstrating hands-on ability for this role.
+Add back approximately ${slackLines - 2} to ${slackLines} lines of real content (never exceed this, to avoid pushing back to 2 pages) using this priority order:
+1. Restore one previously-commented bullet from the Hidden Archive (an unselected Project, or a pruned Experience bullet) that is the next-most relevant to this job description, uncommenting it into the active document.
+2. If no archived bullet fits within the remaining space, expand 1-2 of the current shortest bullets with more specific technical detail, keywords, or context that is already true and present elsewhere in the master CV — never invent new facts.
+3. If Tech Stack categories were trimmed below 6-7 items during earlier tailoring, restore 1-2 more relevant items per category if space allows.
 
-STEP 5 — Tech Stack: Edit In Place:
-The \`% @id:TECH_STACK\` block is a single itemize block with category lines (Programming Languages, Backend & Microservices, etc.). Edit the technology lists within each category line to keep only tools/technologies relevant to this job — remove irrelevant ones even if the candidate is skilled in them. If an entire category has zero relevant items left, remove that whole category line. Keep the bold category labels and formatting exactly as structured.
+Do not remove or shorten anything currently in the document — this pass only adds content back within the measured slack. Return the full corrected document in the same tailoredLatex/coverMail JSON format, following all the same LaTeX rules (double-escaped backslashes, @id markers preserved exactly, locked sections untouched).
 
-STEP 6 — Fit to One Page:
-The final PDF must be exactly one page. If content still risks overflowing after the steps above:
-  - First, tighten wording across all active bullets (cut filler words, merge redundant clauses) while preserving every keyword and number — do not sacrifice technical density for length.
-  - Do not solve overflow by removing an entire Experience entry (forbidden by Step 3) — only by further trimming bullets within entries, or ensuring exactly 2 projects are active.
-
-STEP 7 — Cover Mail:
-Write a professional 3-paragraph cover email to the Hiring Manager, referencing 2-3 concrete points from the now-tailored CV that map directly to the JD's stated requirements. Natural, confident tone — no invented facts beyond what's in the tailored CV.
-
-===========================================
-HIDDEN ARCHIVE RULE (applies to every unused block)
-===========================================
-Never delete content. For every \`% @id:...\` block you are excluding (unused About variants, unselected projects, pruned bullets if you choose to preserve rather than delete them), comment out every content line inside it by prefixing with \`%\`, while leaving the \`% @id:...\` and \`% @end\` marker lines themselves untouched and uncommented, exactly as they appear in the source. This keeps the block invisible in the compiled PDF but fully recoverable and re-parseable for future job applications — it is not optional, it's how the archive stays lossless.
-
-===========================================
-CRITICAL LATEX & STRUCTURE RULES (never violate)
-===========================================
-
-Rule 1: Never break LaTeX syntax.
-
-Rule 2: Exclude irrelevant blocks based on the Job Description, per the workflow above — never based on guesswork about what "sounds impressive."
-
-Rule 3: You MUST double-escape all backslashes in your LaTeX output (e.g. write \\\\textbf instead of \\textbf, \\\\resumeItem instead of \\resumeItem) to ensure the JSON is valid.
-
-Rule 4 (CRITICAL): You MUST escape any ampersand used in plain text or headings as \\\\& (e.g., "Cybersecurity \\\\& Analysis"). A bare "&" is strictly forbidden unless used as a table column separator.
-
-Rule 5 (CRITICAL): NEVER alter the \\\\begin{tabularx} layout commands. Keep them EXACTLY as \\\\begin{tabularx}{\\\\textwidth\\\\vspace{-20pt}}{X X}. Do NOT add extra braces.
-
-Rule 6 (CRITICAL): Do NOT add \\\\\\\\ before \\\\resumeItemListEnd or add extra line breaks inside itemize environments.
-
-Rule 7 (CRITICAL): NEVER modify any code, package imports, or formatting settings above the "% RESUME STARTS HERE" line.
-
-Rule 8 (CRITICAL): NEVER change any section titles (e.g., \\\\section{Experience}).
-
-Rule 9 (CRITICAL): The ENTIRE "Languages \\\\& Affiliations" section (\`% @id:LANG_AFFIL\`) is LOCKED. Do not modify, remove, or alter anything inside it.
-
-Rule 10 (CRITICAL): The ENTIRE Heading block (name, email, LinkedIn, phone, GitHub, portfolio at the top of the document) is LOCKED. Do not modify it in any way.
-
-Rule 11 (CRITICAL): The ENTIRE Education block (\`% @id:EDUCATION\`) is LOCKED. Do not modify, remove, or alter anything inside it.
-
-Rule 12 (CRITICAL): Every \`% @id:...\` and \`% @end\` marker line in the source must appear in your output exactly as given — same identifier, same position, never renamed, merged, split, or removed. These markers are used by downstream code to programmatically diff and re-parse the document; breaking them breaks the pipeline.
-
-Rule 13 (CRITICAL): Never fabricate a technology, metric, employer, or claim that does not already exist somewhere in the master CV. Tailoring means selecting, reordering emphasis, rewording, and compressing — never inventing.
-
-DO NOT wrap the JSON in markdown blocks like \`\`\`json.`;
+Current tailoredLatex to enrich:
+${latex}`;
+}
 
 export async function POST(request: Request) {
   try {
@@ -137,7 +98,7 @@ export async function POST(request: Request) {
       });
     }
 
-    // 2. Rate Limiting
+    // 2. Rate Limiting (one slot per tailor click, regardless of retries)
     const ip = request.headers.get('x-forwarded-for') ?? 'anonymous';
     const rateLimit = await checkRateLimit(tailorLimiter, ip);
     if (!rateLimit.success) {
@@ -150,13 +111,25 @@ export async function POST(request: Request) {
     const devSecret = process.env.DEV_PANEL_SECRET;
     const isDevMode = devKey && devSecret && devKey === devSecret;
 
-    // Only accept provider/model overrides from authenticated dev requests
     let devProvider: string | undefined;
     let devModel: string | undefined;
+    let activeSystemPrompt = TAILOR_SYSTEM_PROMPT;
+
     if (isDevMode) {
       devProvider = body.devProvider;
       devModel = body.devModel;
+      if (body.devSystemPrompt && typeof body.devSystemPrompt === 'string') {
+        activeSystemPrompt = body.devSystemPrompt;
+      }
     }
+
+    // Helper: call LLM using dev override or fallback chain
+    const callLLM = async (params: { systemPrompt: string; userPrompt: string; jsonSchema: typeof TAILOR_SCHEMA }) => {
+      if (isDevMode && devProvider) {
+        return callSpecificProvider<TailorResponse>(devProvider, devModel, params);
+      }
+      return callWithFallbackChain<TailorResponse>(params);
+    };
 
     // 4. Setup NDJSON stream
     const encoder = new TextEncoder();
@@ -172,24 +145,22 @@ export async function POST(request: Request) {
           }`;
 
           const llmParams = {
-            systemPrompt: SYSTEM_PROMPT,
+            systemPrompt: activeSystemPrompt,
             userPrompt,
             jsonSchema: TAILOR_SCHEMA,
           };
 
+          // ── Step 1: Initial LLM call ──
           let result;
-
           if (isDevMode && devProvider) {
-            // Dev mode: call specific provider
             send({
               type: 'progress',
               message: `[DEV] Calling ${devProvider}${devModel ? ` (${devModel})` : ''}...`,
               step: 1,
-              totalSteps: 2,
+              totalSteps: 3,
             });
             result = await callSpecificProvider<TailorResponse>(devProvider, devModel, llmParams);
           } else {
-            // Public mode: use fallback chain
             result = await callWithFallbackChain<TailorResponse>(
               llmParams,
               (providerId, model, attemptIndex, totalProviders) => {
@@ -198,18 +169,103 @@ export async function POST(request: Request) {
                   type: 'progress',
                   message: `Analyzing with ${providerId} (${model.split('/').pop() || model})${retryNote}...`,
                   step: 1,
-                  totalSteps: 2,
+                  totalSteps: 3,
                 });
               },
             );
           }
 
-          send({ type: 'progress', message: 'Parsing response...', step: 2, totalSteps: 2 });
+          // ── Step 2: Compile-Check-Retry Loop (Precise Shrink + Grow-Back) ──
+          send({ type: 'progress', message: 'Compiling PDF to verify page layout...', step: 2, totalSteps: 3 });
+
+          let currentLatex = result.data.tailoredLatex;
+          let coverMail = result.data.coverMail;
+          let analysis: PageAnalysis = { totalPages: 1, linesPerPage: [0] };
+          let shrinkAttempts = 0;
+          let growAttempts = 0;
+
+          try {
+            // --- Phase 1: shrink until it fits on 1 page ---
+            while (true) {
+              const pdfBytes = await compileLatexToPdf(currentLatex);
+              analysis = await analyzePdfPages(pdfBytes);
+
+              if (analysis.totalPages <= 1 || shrinkAttempts >= MAX_SHRINK_ATTEMPTS) break;
+
+              shrinkAttempts++;
+              const overflowLines = analysis.linesPerPage.slice(1).reduce((sum, n) => sum + n, 0);
+
+              send({
+                type: 'progress',
+                message: `PDF is ${analysis.totalPages} pages (${overflowLines} lines overflow) — trimming (attempt ${shrinkAttempts}/${MAX_SHRINK_ATTEMPTS})...`,
+                step: 2,
+                totalSteps: 3 + shrinkAttempts,
+              });
+
+              const retryResult = await callLLM({
+                systemPrompt: activeSystemPrompt,
+                userPrompt: buildShrinkPrompt(currentLatex, overflowLines),
+                jsonSchema: TAILOR_SCHEMA,
+              });
+
+              currentLatex = retryResult.data.tailoredLatex;
+              coverMail = retryResult.data.coverMail;
+            }
+
+            // --- Phase 2: grow back if there's meaningful slack ---
+            if (analysis.totalPages === 1) {
+              const usedLines = analysis.linesPerPage[0] ?? 0;
+              const slack = PAGE_LINE_CAPACITY - usedLines;
+
+              if (slack >= SLACK_THRESHOLD) {
+                growAttempts = 1;
+
+                send({
+                  type: 'progress',
+                  message: `Page fits with ${slack} lines of slack — restoring archived content...`,
+                  step: 3 + shrinkAttempts,
+                  totalSteps: 3 + shrinkAttempts + 1,
+                });
+
+                const growResult = await callLLM({
+                  systemPrompt: activeSystemPrompt,
+                  userPrompt: buildGrowBackPrompt(currentLatex, slack),
+                  jsonSchema: TAILOR_SCHEMA,
+                });
+
+                // Verify the grow-back didn't push it back to 2 pages
+                const grownPdfBytes = await compileLatexToPdf(growResult.data.tailoredLatex);
+                const grownAnalysis = await analyzePdfPages(grownPdfBytes);
+
+                if (grownAnalysis.totalPages === 1) {
+                  // Safe to accept the fuller version
+                  currentLatex = growResult.data.tailoredLatex;
+                  coverMail = growResult.data.coverMail;
+                  analysis = grownAnalysis;
+                }
+                // else: silently keep the pre-grow version — avoid oscillation
+              }
+            }
+          } catch (compileErr) {
+            // If compile/analysis fails, proceed with the LaTeX as-is
+            console.warn('[tailor] compile-check failed, skipping page verification:', compileErr);
+          }
+
+          const linesUsedOnPage1 = analysis.linesPerPage[0] ?? 0;
+          const slackLines = Math.max(0, PAGE_LINE_CAPACITY - linesUsedOnPage1);
+
+          const finalStep = 3 + shrinkAttempts + growAttempts;
+          send({ type: 'progress', message: 'Done!', step: finalStep, totalSteps: finalStep });
 
           send({
             type: 'result',
-            tailoredLatex: result.data.tailoredLatex,
-            coverMail: result.data.coverMail,
+            tailoredLatex: currentLatex,
+            coverMail,
+            pageCount: analysis.totalPages,
+            linesUsedOnPage1,
+            slackLines,
+            shrinkAttempts,
+            growAttempts,
             meta: {
               provider: result.providerId,
               model: result.model,

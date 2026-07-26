@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { Sparkles, Loader2, AlertCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Sparkles, Loader2, AlertCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import TurnstileWidget from './TurnstileWidget';
 import { MAX_JOB_DESCRIPTION_LENGTH, MAX_CUSTOM_INSTRUCTIONS_LENGTH } from '@/lib/constants';
 
@@ -11,6 +11,11 @@ interface AiTailorTabProps {
   onTailorComplete: (result: {
     tailoredLatex: string;
     coverMail: string;
+    pageCount?: number;
+    linesUsedOnPage1?: number;
+    slackLines?: number;
+    shrinkAttempts?: number;
+    growAttempts?: number;
     meta?: { provider: string; model: string };
   }) => void;
 }
@@ -43,6 +48,29 @@ export default function AiTailorTab({ masterLatex, devKey, onTailorComplete }: A
   const isDevMode = !!devKey;
   const [devProvider, setDevProvider] = useState('openrouter');
   const [devModel, setDevModel] = useState('');
+  const [devSystemPrompt, setDevSystemPrompt] = useState('');
+  const [isSystemPromptOpen, setIsSystemPromptOpen] = useState(false);
+  const [isLoadingPrompt, setIsLoadingPrompt] = useState(false);
+
+  // Fetch default system prompt when dev mode is active
+  useEffect(() => {
+    if (!isDevMode || !devKey) return;
+
+    setIsLoadingPrompt(true);
+    fetch(`/api/tailor/system-prompt?devKey=${encodeURIComponent(devKey)}`)
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to load system prompt');
+        return res.json();
+      })
+      .then((data) => {
+        setDevSystemPrompt(data.systemPrompt || '');
+      })
+      .catch((err) => {
+        console.error('Failed to load system prompt:', err);
+        setDevSystemPrompt('// Failed to load system prompt');
+      })
+      .finally(() => setIsLoadingPrompt(false));
+  }, [isDevMode, devKey]);
 
   const handleTailor = async () => {
     if (!turnstileToken || !jobDescription.trim()) return;
@@ -66,6 +94,9 @@ export default function AiTailorTab({ masterLatex, devKey, onTailorComplete }: A
         bodyPayload.devProvider = devProvider;
         if (devModel.trim()) {
           bodyPayload.devModel = devModel.trim();
+        }
+        if (devSystemPrompt.trim()) {
+          bodyPayload.devSystemPrompt = devSystemPrompt.trim();
         }
       }
 
@@ -109,6 +140,11 @@ export default function AiTailorTab({ masterLatex, devKey, onTailorComplete }: A
               onTailorComplete({
                 tailoredLatex: event.tailoredLatex,
                 coverMail: event.coverMail,
+                pageCount: event.pageCount,
+                linesUsedOnPage1: event.linesUsedOnPage1,
+                slackLines: event.slackLines,
+                shrinkAttempts: event.shrinkAttempts,
+                growAttempts: event.growAttempts,
                 meta: event.meta,
               });
             } else if (event.type === 'error') {
@@ -185,7 +221,7 @@ export default function AiTailorTab({ masterLatex, devKey, onTailorComplete }: A
         </div>
       </div>
 
-      {/* Dev Mode: Provider/Model Picker */}
+      {/* Dev Mode: Provider/Model Picker + System Prompt Editor */}
       {isDevMode && (
         <div className="space-y-3 p-4 rounded-lg bg-muted/30 border border-border">
           <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Dev: Provider Override</p>
@@ -209,6 +245,39 @@ export default function AiTailorTab({ masterLatex, devKey, onTailorComplete }: A
               disabled={isTailoring}
               className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-amber-500/30 disabled:opacity-50"
             />
+          </div>
+
+          {/* System Prompt Editor */}
+          <div className="border-t border-border pt-3 mt-3">
+            <button
+              onClick={() => setIsSystemPromptOpen((v) => !v)}
+              className="flex items-center gap-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider hover:text-foreground transition-colors w-full"
+            >
+              {isSystemPromptOpen ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+              Dev: System Prompt
+              {isLoadingPrompt && <Loader2 className="w-3 h-3 animate-spin" />}
+            </button>
+
+            {isSystemPromptOpen && (
+              <div className="mt-3 space-y-2">
+                <p className="text-xs text-muted-foreground">
+                  Edit the system prompt below. Changes apply only to this request — they are not persisted.
+                </p>
+                <textarea
+                  value={devSystemPrompt}
+                  onChange={(e) => setDevSystemPrompt(e.target.value)}
+                  disabled={isTailoring || isLoadingPrompt}
+                  rows={20}
+                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-xs font-mono leading-relaxed focus:outline-none focus:ring-2 focus:ring-amber-500/30 disabled:opacity-50 resize-y"
+                  placeholder="Loading system prompt..."
+                />
+                <div className="flex justify-end">
+                  <span className="text-xs text-muted-foreground">
+                    {devSystemPrompt.length.toLocaleString()} chars
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

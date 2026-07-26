@@ -7,12 +7,8 @@
 
 import { verifyTurnstile } from '@/lib/turnstile';
 import { compileLimiter, checkRateLimit, rateLimitResponse } from '@/lib/rate-limit';
-import {
-  MAX_LATEX_LENGTH,
-  COMPILE_TIMEOUT_MS,
-  YTOTECH_URL,
-  LATEXONLINE_URL,
-} from '@/lib/constants';
+import { MAX_LATEX_LENGTH } from '@/lib/constants';
+import { compileLatexToPdf } from '@/lib/compile/compileLatex';
 
 export async function POST(request: Request) {
   const startTime = Date.now();
@@ -50,66 +46,11 @@ export async function POST(request: Request) {
       return rateLimitResponse(rateResult.remaining);
     }
 
-    // ── Primary: ytotech ──
-    let pdfBuffer: ArrayBuffer | null = null;
-    let usedService = '';
-
+    // ── Compile ──
+    let pdfBuffer: ArrayBuffer;
     try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), COMPILE_TIMEOUT_MS);
-
-      const ytoRes = await fetch(YTOTECH_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          compiler: 'pdflatex',
-          resources: [{ main: true, content: latexCode }],
-        }),
-        signal: controller.signal,
-      });
-
-      clearTimeout(timeout);
-
-      if (ytoRes.ok) {
-        pdfBuffer = await ytoRes.arrayBuffer();
-        usedService = 'ytotech';
-      }
+      pdfBuffer = await compileLatexToPdf(latexCode);
     } catch {
-      // ytotech failed — fall through to latexonline
-    }
-
-    // ── Fallback: latexonline.cc ──
-    if (!pdfBuffer) {
-      try {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), COMPILE_TIMEOUT_MS);
-
-        const formData = new URLSearchParams();
-        formData.append('text', latexCode);
-
-        const latexonlineRes = await fetch(
-          `${LATEXONLINE_URL}?command=pdflatex`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: formData.toString(),
-            signal: controller.signal,
-          }
-        );
-
-        clearTimeout(timeout);
-
-        if (latexonlineRes.ok) {
-          pdfBuffer = await latexonlineRes.arrayBuffer();
-          usedService = 'latexonline';
-        }
-      } catch {
-        // latexonline also failed
-      }
-    }
-
-    // ── Both failed ──
-    if (!pdfBuffer) {
       return jsonError(
         'Both compile services are currently unavailable. Please try again shortly.',
         502
@@ -119,7 +60,7 @@ export async function POST(request: Request) {
     // ── Aggregate-only logging ──
     const latency = Date.now() - startTime;
     console.log(
-      `[compile] service=${usedService} latency=${latency}ms size=${pdfBuffer.byteLength} ip_hash=${hashIp(ip)}`
+      `[compile] latency=${latency}ms size=${pdfBuffer.byteLength} ip_hash=${hashIp(ip)}`
     );
 
     // ── Return PDF ──

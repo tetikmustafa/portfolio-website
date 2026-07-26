@@ -26,6 +26,10 @@ export default function CvBuilderClient() {
   // Results state
   const [tailoredLatex, setTailoredLatex] = useState<string | null>(null);
   const [coverMail, setCoverMail] = useState<string | null>(null);
+  const [pageCount, setPageCount] = useState<number | undefined>(undefined);
+  const [slackLines, setSlackLines] = useState<number | undefined>(undefined);
+  const [shrinkAttempts, setShrinkAttempts] = useState<number | undefined>(undefined);
+  const [growAttempts, setGrowAttempts] = useState<number | undefined>(undefined);
 
   // Load master.tex from public folder
   useEffect(() => {
@@ -48,10 +52,19 @@ export default function CvBuilderClient() {
   const handleTailorComplete = (result: {
     tailoredLatex: string;
     coverMail: string;
+    pageCount?: number;
+    linesUsedOnPage1?: number;
+    slackLines?: number;
+    shrinkAttempts?: number;
+    growAttempts?: number;
     meta?: { provider: string; model: string };
   }) => {
     setTailoredLatex(result.tailoredLatex);
     setCoverMail(result.coverMail);
+    setPageCount(result.pageCount);
+    setSlackLines(result.slackLines);
+    setShrinkAttempts(result.shrinkAttempts);
+    setGrowAttempts(result.growAttempts);
     setActiveTab('results');
   };
 
@@ -143,9 +156,12 @@ export default function CvBuilderClient() {
         )}
         {activeTab === 'results' && tailoredLatex && coverMail && (
           <ResultsTab
-            masterLatex={masterLatex}
             tailoredLatex={tailoredLatex}
             coverMail={coverMail}
+            pageCount={pageCount}
+            slackLines={slackLines}
+            shrinkAttempts={shrinkAttempts}
+            growAttempts={growAttempts}
           />
         )}
       </div>

@@ -24,9 +24,9 @@
     "lucide-react": "^0.454.0",
     "next": "^15.5.21",
     "react": "^19",
-    "react-diff-viewer-continued": "^4.4.0",
     "react-dom": "^19",
-    "tailwind-merge": "^2.5.5"
+    "tailwind-merge": "^2.5.5",
+    "unpdf": "^1.8.0"
   },
   "devDependencies": {
     "@opennextjs/cloudflare": "^1.20.2",

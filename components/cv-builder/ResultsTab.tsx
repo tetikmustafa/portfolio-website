@@ -1,50 +1,46 @@
 'use client';
 
-import { useState } from 'react';
-import dynamic from 'next/dynamic';
-import { Download, Copy, Check, Loader2, FileText, Mail } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Download, Copy, Check, Loader2, FileText, Mail, AlertTriangle } from 'lucide-react';
 import LaTeXEditor from './LaTeXEditor';
 import TurnstileWidget from './TurnstileWidget';
 
-// Lazy-load diff viewer — heavy component
-const ReactDiffViewer = dynamic(() => import('react-diff-viewer-continued'), {
-  ssr: false,
-  loading: () => (
-    <div className="h-64 bg-muted/30 rounded-lg border border-border animate-pulse flex items-center justify-center">
-      <span className="text-muted-foreground text-sm">Loading diff view…</span>
-    </div>
-  ),
-});
-
 interface ResultsTabProps {
-  masterLatex: string;
   tailoredLatex: string;
   coverMail: string;
+  pageCount?: number;
+  slackLines?: number;
+  shrinkAttempts?: number;
+  growAttempts?: number;
 }
 
 export default function ResultsTab({
-  masterLatex,
   tailoredLatex,
   coverMail,
+  pageCount,
+  slackLines,
+  shrinkAttempts,
+  growAttempts,
 }: ResultsTabProps) {
   const [editedTailored, setEditedTailored] = useState(tailoredLatex);
   const [isCompiling, setIsCompiling] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [turnstileResetKey, setTurnstileResetKey] = useState(0);
-  const [copied, setCopied] = useState(false);
+  const [copiedLatex, setCopiedLatex] = useState(false);
+  const [copiedMail, setCopiedMail] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [showDiff, setShowDiff] = useState(true);
-  const [isDark, setIsDark] = useState(true);
-  const [pdfFilename, setPdfFilename] = useState('tailored-cv');
+  const [pdfFilename, setPdfFilename] = useState('Mustafa_Tetik_CV');
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
 
-  // Detect theme for diff viewer
-  useState(() => {
-    if (typeof window !== 'undefined') {
-      setIsDark(document.documentElement.classList.contains('dark'));
+  // Clear PDF preview if code changes
+  useEffect(() => {
+    if (pdfUrl) {
+      URL.revokeObjectURL(pdfUrl);
+      setPdfUrl(null);
     }
-  });
+  }, [editedTailored]);
 
-  const handleDownloadPdf = async () => {
+  const handleCompileAndPreview = async () => {
     if (!turnstileToken) return;
     setIsCompiling(true);
     setError(null);
@@ -69,14 +65,7 @@ export default function ResultsTab({
 
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      const finalName = pdfFilename.trim() || 'tailored-cv';
-      a.download = finalName.endsWith('.pdf') ? finalName : `${finalName}.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+      setPdfUrl(url);
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -84,26 +73,52 @@ export default function ResultsTab({
     }
   };
 
+  const handleCopyLatex = async () => {
+    try {
+      await navigator.clipboard.writeText(editedTailored);
+      setCopiedLatex(true);
+      setTimeout(() => setCopiedLatex(false), 2000);
+    } catch {
+      const textarea = document.createElement('textarea');
+      textarea.value = editedTailored;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      setCopiedLatex(true);
+      setTimeout(() => setCopiedLatex(false), 2000);
+    }
+  };
+
   const handleCopyMail = async () => {
     try {
       await navigator.clipboard.writeText(coverMail);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setCopiedMail(true);
+      setTimeout(() => setCopiedMail(false), 2000);
     } catch {
-      // Fallback for non-HTTPS contexts
       const textarea = document.createElement('textarea');
       textarea.value = coverMail;
       document.body.appendChild(textarea);
       textarea.select();
       document.execCommand('copy');
       document.body.removeChild(textarea);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setCopiedMail(true);
+      setTimeout(() => setCopiedMail(false), 2000);
     }
   };
 
   return (
     <div className="space-y-6">
+
+      {/* ═══ Page Count Warning Banner ═══ */}
+      {pageCount !== undefined && pageCount > 1 && (
+        <div className="px-4 py-3 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-400 text-sm flex items-center gap-2">
+          <AlertTriangle className="w-4 h-4 flex-shrink-0" />
+          <span>
+            Bu sürüm hâlâ {pageCount} sayfa — otomatik kısaltma denemeleri tükendi, manuel düzenleme önerilir.
+          </span>
+        </div>
+      )}
 
       {/* ═══ Section A: Tailored CV ═══ */}
       <div className="space-y-4">
@@ -113,12 +128,46 @@ export default function ResultsTab({
             Tailored CV
           </h3>
           <button
-            onClick={() => setShowDiff((v) => !v)}
-            className="text-xs px-3 py-1.5 rounded-lg border border-border text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all"
+            onClick={handleCopyLatex}
+            className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border border-border text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all"
           >
-            {showDiff ? 'Hide' : 'Show'} Diff View
+            {copiedLatex ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-green-500" />
+                Copied!
+              </>
+            ) : (
+              <>
+                <Copy className="w-3.5 h-3.5" />
+                Copy LaTeX
+              </>
+            )}
           </button>
         </div>
+
+        {/* Page count info badge */}
+        {pageCount !== undefined && pageCount > 0 && (
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full border ${pageCount === 1 ? 'border-green-500/30 bg-green-500/10 text-green-600 dark:text-green-400' : 'border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400'}`}>
+              {pageCount} page{pageCount !== 1 ? 's' : ''}
+            </span>
+            {pageCount === 1 && slackLines !== undefined && (
+              <span className="text-muted-foreground/70">
+                Sayfa doluluğu: {slackLines < 6 ? 'iyi' : `${slackLines} satır boşluk`}
+              </span>
+            )}
+            {shrinkAttempts !== undefined && shrinkAttempts > 0 && (
+              <span className="text-muted-foreground/70">
+                ({shrinkAttempts} shrink{growAttempts ? ` + ${growAttempts} grow` : ''})
+              </span>
+            )}
+            {shrinkAttempts === 0 && growAttempts !== undefined && growAttempts > 0 && (
+              <span className="text-muted-foreground/70">
+                ({growAttempts} grow-back)
+              </span>
+            )}
+          </div>
+        )}
 
         <LaTeXEditor
           value={editedTailored}
@@ -126,32 +175,24 @@ export default function ResultsTab({
           height="400px"
         />
 
-        {/* Diff View */}
-        {showDiff && (
-          <div className="rounded-lg overflow-hidden border border-border">
-            <div className="px-4 py-2 bg-muted/50 border-b border-border text-xs text-muted-foreground font-medium">
-              Changes: Master CV → Tailored CV
-            </div>
-            <div className="max-h-[400px] overflow-auto text-xs">
-              <ReactDiffViewer
-                oldValue={masterLatex}
-                newValue={editedTailored}
-                splitView={true}
-                useDarkTheme={isDark}
-                leftTitle="Master CV"
-                rightTitle="Tailored CV"
-                styles={{
-                  contentText: { fontSize: '11px', lineHeight: '1.5' },
-                }}
-              />
-            </div>
-          </div>
-        )}
-
         {/* Error */}
         {error && (
           <div className="px-4 py-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm">
             {error}
+          </div>
+        )}
+
+        {/* PDF Preview */}
+        {pdfUrl && (
+          <div className="rounded-lg overflow-hidden border border-border mt-4">
+            <div className="px-4 py-2 bg-muted/50 border-b border-border text-xs text-muted-foreground font-medium">
+              PDF Preview
+            </div>
+            <iframe
+              src={pdfUrl}
+              className="w-full h-[600px] border-none bg-white"
+              title="PDF Preview"
+            />
           </div>
         )}
 
@@ -173,7 +214,7 @@ export default function ResultsTab({
             <span className="text-muted-foreground text-sm -ml-1">.pdf</span>
           </div>
           <button
-            onClick={handleDownloadPdf}
+            onClick={handleCompileAndPreview}
             disabled={isCompiling || !turnstileToken}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm transition-all duration-200 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
           >
@@ -184,11 +225,22 @@ export default function ResultsTab({
               </>
             ) : (
               <>
-                <Download className="w-4 h-4" />
-                Download
+                <FileText className="w-4 h-4" />
+                Compile & Preview
               </>
             )}
           </button>
+          
+          {pdfUrl && (
+            <a
+              href={pdfUrl}
+              download={`${pdfFilename.trim() || 'Mustafa_Tetik_CV'}.pdf`}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-green-600 text-white font-medium text-sm transition-all duration-200 hover:bg-green-700 shadow-sm hover:shadow-md"
+            >
+              <Download className="w-4 h-4" />
+              Download PDF
+            </a>
+          )}
         </div>
       </div>
 
@@ -210,7 +262,7 @@ export default function ResultsTab({
           onClick={handleCopyMail}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-sm font-medium text-foreground hover:border-primary/30 hover:bg-primary/5 transition-all"
         >
-          {copied ? (
+          {copiedMail ? (
             <>
               <Check className="w-4 h-4 text-green-500" />
               Copied!
